@@ -8,7 +8,7 @@ def init_app():
     app = Flask(__name__)
     app.config.from_object(config)
     scheduler = BackgroundScheduler()
-    job = scheduler.add_job(parser.run, 'interval', hours=1000)
+    job = scheduler.add_job(parser.run, 'interval', seconds=10)
     scheduler.start()
 
     return app
