@@ -2,6 +2,8 @@ from selenium import webdriver
 from flask import g
 from selenium.webdriver.common.keys import Keys
 import time
+from .models import get_current_datetime, ChannelLink
+
 
 class SeleniumWebDriwer(object):
     def __init__(self,
@@ -16,8 +18,9 @@ class SeleniumWebDriwer(object):
         # c = self.driver.find_elements_by_xpath("//div[@class='tv-grid__item']/div[@class='tv-channel']")
         page_height = 0
 
+
         scroll_height_script = """ return window.innerHeight + window.scrollY """
-        print(self.driver.get(self.url))
+        print(get_current_datetime())
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
