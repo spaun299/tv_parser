@@ -6,7 +6,7 @@ import time
 class SeleniumWebDriwer(object):
     def __init__(self,
                  driver=webdriver.PhantomJS(service_args=['--ssl-protocol=any']),
-                 url='https://tv.yandex.ua/2?grid=all&period=now&ncrnd=7838'):
+                 url='https://tv.yandex.ru'):
         self.driver = driver
         self.url = url
 
@@ -17,6 +17,7 @@ class SeleniumWebDriwer(object):
         page_height = 0
 
         scroll_height_script = """ return window.innerHeight + window.scrollY """
+        print(self.driver.get(self.url))
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
