@@ -13,10 +13,10 @@ class SeleniumWebDriver(object):
 
     @staticmethod
     def phantomjs_config():
-        conf = dict(service_args=['--ssl-protocol=any'], port=8000)
+        conf = dict(service_args=['--ssl-protocol=any'])
         if os.environ.get('OPENSHIFT_DATA_DIR'):
             conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
-            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin'
+            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
         return conf
 
     def run(self):
