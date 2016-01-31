@@ -14,9 +14,9 @@ def get_current_datetime(timezone='Europe/Moscow'):
 
 class ChannelLink(Base):
     __tablename__ = 'channel_link'
-    id = Column(Integer, primary_key=True, autoincrement=True, unique=True, nullable=False)
-    name = Column(String(200), nullable=False, unique=True)
-    url = Column(String(500), nullable=False, unique=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(200), nullable=False)
+    url = Column(String(500), nullable=False)
     language = Column(String(2), default='ru')
     md_tm = Column(DateTime, default=get_current_datetime())
 

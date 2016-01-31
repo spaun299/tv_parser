@@ -1,5 +1,4 @@
-flask>=0.10.0
 selenium
 APScheduler
-SQLAlchemy>=1.0.8
 psycopg2
+pytz
