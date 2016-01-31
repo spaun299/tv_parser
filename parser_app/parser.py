@@ -2,14 +2,22 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import config
+import os
 
 
 class SeleniumWebDriver(object):
-    def __init__(self,
-                 driver=webdriver.PhantomJS(service_args=['--ssl-protocol=any']),
-                 url=config.MAIN_PARSE_URL):
-        self.driver = driver
+
+    def __init__(self, url=config.MAIN_PARSE_URL):
+        self.driver = webdriver.PhantomJS(**self.phantomjs_config())
         self.url = url
+
+    @staticmethod
+    def phantomjs_config():
+        conf = dict(service_args=['--ssl-protocol=any'])
+        if os.environ.get('OPENSHIFT_DATA_DIR'):
+            conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
+            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs'
+        return conf
 
     def run(self):
         self.driver.get(self.url)
