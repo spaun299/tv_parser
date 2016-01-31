@@ -16,7 +16,7 @@ class SeleniumWebDriver(object):
         conf = dict(service_args=['--ssl-protocol=any'])
         if os.environ.get('OPENSHIFT_DATA_DIR'):
             conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
-            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs'
+            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin'
         return conf
 
     def run(self):
