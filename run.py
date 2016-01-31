@@ -5,19 +5,17 @@ import time
 driver = SeleniumWebDriver()
 
 
-class RunApp:
-    @staticmethod
-    def run():
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(driver.run, 'interval', seconds=10, id=str(time.time()))
-        scheduler.start()
-        driver.run()
-        try:
+def run():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(driver.run, 'interval', seconds=10, id=str(time.time()))
+    scheduler.start()
+    driver.run()
+    try:
             # This is here to simulate application activity (which keeps the main thread alive).
-            while True:
-                time.sleep(2)
-        except (KeyboardInterrupt, SystemExit):
+        while True:
+            time.sleep(2)
+    except (KeyboardInterrupt, SystemExit):
             # Not strictly necessary if daemonic mode is enabled but should be done if possible
-            scheduler.shutdown()
+        scheduler.shutdown()
 if __name__ == '__main__':
-    RunApp.run()
+    run()

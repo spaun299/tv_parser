@@ -8,4 +8,4 @@ try:
 except IOError:
     pass
 
-from run import RunApp as application
+from run import run as application
