@@ -19,8 +19,7 @@ class SeleniumWebDriver(object):
             # conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
             # conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
             capabilities = dict(browserName='phantomjs', acceptSslCerts=True, javascriptEnabled=True)
-            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':8000',
-                                      desired_capabilities=capabilities)
+            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':15002',                                      desired_capabilities=capabilities)
             return driver
         driver = webdriver.PhantomJS(**conf)
         return driver
