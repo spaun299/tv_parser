@@ -21,7 +21,8 @@ class SeleniumWebDriver(object):
             # conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
             # conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
             capabilities = dict(browserName='phantomjs', acceptSslCerts=True, javascriptEnabled=True)
-            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':15005',                                      desired_capabilities=capabilities)
+            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':15005',
+                                      desired_capabilities=capabilities)
             return driver
         driver = webdriver.PhantomJS(**conf)
         return driver
@@ -37,7 +38,7 @@ class SeleniumWebDriver(object):
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(5)
         channels_title_div = self.driver.find_elements_by_class_name('tv-channel-title__link')
-            for a in channels_title_div:
-                print(a.get_attribute('href'))
+        for a in channels_title_div:
+            print(a.get_attribute('href'))
         channels_url = map(lambda div: div.get_attribute('href'), filter(lambda href: href.get_attribute('href'),
                            channels_title_div))
