@@ -7,7 +7,7 @@ import os
 
 class SeleniumWebDriver(object):
 
-    def __init__(self, url=config.MAIN_PARSE_URL):
+    def __init__(self, url='http://www.work.ua'):
         self.driver = self.get_phantomjs_driver()
         self.url = url
 
