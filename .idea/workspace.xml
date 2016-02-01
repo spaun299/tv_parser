@@ -151,8 +151,8 @@
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/wsgi.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/.openshift/action_hooks/post_deploy" />
         <option value="$PROJECT_DIR$/parser_app/parser.py" />
+        <option value="$PROJECT_DIR$/.openshift/action_hooks/post_deploy" />
       </list>
     </option>
   </component>
