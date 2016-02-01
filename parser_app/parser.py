@@ -13,13 +13,13 @@ class SeleniumWebDriver(object):
 
     @staticmethod
     def get_phantomjs_driver():
-        conf = dict(service_args=['--ssl-protocol=any'], port=8080)
+        conf = dict(service_args=['--ssl-protocol=any'])
         if os.environ.get('OPENSHIFT_DATA_DIR'):
             # conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
             # conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
             # conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
             capabilities = dict(browserName='phantomjs', acceptSslCerts=True, javascriptEnabled=True)
-            driver = webdriver.Remote(command_executor=os.environ.get('OPENSHIFT_PYTHON_IP')+':15002',
+            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':15002',
                                       desired_capabilities=capabilities)
             return driver
         driver = webdriver.PhantomJS(**conf)
