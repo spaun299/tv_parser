@@ -6,6 +6,7 @@ driver = SeleniumWebDriver()
 
 
 def run(*args):
+    print(args)
     scheduler = BackgroundScheduler()
     scheduler.add_job(driver.run, 'interval', seconds=10, id=str(time.time()))
     scheduler.start()
