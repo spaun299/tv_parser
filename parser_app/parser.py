@@ -8,17 +8,20 @@ import os
 class SeleniumWebDriver(object):
 
     def __init__(self, url=config.MAIN_PARSE_URL):
-        self.driver = webdriver.PhantomJS(**self.phantomjs_config())
+        self.driver = self.get_phantomjs_driver()
         self.url = url
 
     @staticmethod
-    def phantomjs_config():
+    def get_phantomjs_driver():
         conf = dict(service_args=['--ssl-protocol=any'], port=8080)
         if os.environ.get('OPENSHIFT_DATA_DIR'):
-            conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
-            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
-            conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
-        return conf
+            # conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
+            # conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
+            # conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
+            driver = webdriver.Remote(command_executor=os.environ.get('OPENSHIFT_PYTHON_IP')+'/15002')
+            return driver
+        driver = webdriver.PhantomJS(**conf)
+        return driver
 
     def run(self):
         self.driver.get(self.url)
