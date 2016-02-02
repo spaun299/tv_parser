@@ -55,13 +55,12 @@ class SeleniumWebDriver(object):
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
                 name = a.find_element_by_css_selector('span.tv-channel-title__text').text
-                href = a.get_attribute('href')
+                print(type(name))
+                print(name.encode('utf-8'))
+                href = a.get_attribute('href').encode('ascii', 'ignore')
                 icon = self.get_background_image(a.find_element_by_css_selector('div.tv-channel-title__icon > '
                                                  'span[class$="image_type_channel"] > span')).encode('ascii', 'ignore')
-                if (a.get_attribute('href') is not None) and (name not in elements.keys()):
-                    elements[name.encode('utf-8')] = {'href': href, 'icon': icon}
+                if (href is not None) and (href not in elements.keys()):
+                    elements[href] = {'name': name, 'icon': icon}
                 print(elements)
-            time.sleep(2)
-        channels_title_div = self.driver.find_elements_by_class_name('tv-channel-title__link')
-        channels_url = map(lambda div: div.get_attribute('href'), filter(lambda href: href.get_attribute('href'),
-                           channels_title_div))
+            time.sleep(5)
