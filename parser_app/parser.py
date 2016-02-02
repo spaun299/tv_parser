@@ -23,6 +23,13 @@ class SeleniumWebDriver(object):
     def get_channel_css_selector():
         return 'div.tv-channel__title > div[class$="tv-channel-title_js_inited"] > div.tv-channel-title__link > a'
 
+    def get_background_image(self, selector):
+        return self.driver.execute_script("""
+                var element = arguments[0],
+                style = element.currentStyle || window.getComputedStyle(element, false);
+                return style.backgroundImage.slice(4, -1);
+                """, selector)
+
     @staticmethod
     def get_phantomjs_driver():
         conf = dict(service_args=['--ssl-protocol=any'])
@@ -49,12 +56,10 @@ class SeleniumWebDriver(object):
             for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
                 name = a.find_element_by_css_selector('span.tv-channel-title__text').text
                 href = a.get_attribute('href')
-                icon = a.find_element_by_css_selector('div.tv-channel-title__icon > '
-                                                      'span[class$="image_type_channel"] > span')
+                icon = self.get_background_image(a.find_element_by_css_selector('div.tv-channel-title__icon > '
+                                                 'span[class$="image_type_channel"] > span')).encode('ascii', 'ignore')
                 if (a.get_attribute('href') is not None) and (name not in elements.keys()):
-                    elements[name] = {'href': href, 'icon': icon}
-
-
+                    elements[name.encode('utf-8')] = {'href': href, 'icon': icon}
                 print(elements)
             time.sleep(2)
         channels_title_div = self.driver.find_elements_by_class_name('tv-channel-title__link')
