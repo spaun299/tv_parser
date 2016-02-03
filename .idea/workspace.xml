@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45de6a8f-23f4-4a1d-a6c3-2302ceeae5ba" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/sql_scripts/1_create_table_channels_files" afterPath="$PROJECT_DIR$/sql_scripts/1_create_table_channels_files.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_init.py" afterPath="$PROJECT_DIR$/db_init.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ghostdriver.log" afterPath="$PROJECT_DIR$/ghostdriver.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_app/models.py" afterPath="$PROJECT_DIR$/parser_app/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_app/parser.py" afterPath="$PROJECT_DIR$/parser_app/parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.md" afterPath="$PROJECT_DIR$/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="yandex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,7 +19,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/yandex$wsgi.coverage" NAME="wsgi Coverage Results" MODIFIED="1448798152841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/yandex$run.coverage" NAME="run Coverage Results" MODIFIED="1454508124597" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yandex$run.coverage" NAME="run Coverage Results" MODIFIED="1454510535103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -75,13 +71,14 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parser_app/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64200795">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.52242744">
+              <caret line="22" column="84" selection-start-line="22" selection-start-column="84" selection-end-line="22" selection-end-column="84" />
               <folding>
-                <marker date="1454507893355" expanded="true" signature="191:253" placeholder="SELECT file_..files..." />
-                <marker date="1454507893355" expanded="true" signature="405:450" placeholder="INSERT INTO ..." />
-                <marker date="1454507893355" expanded="true" signature="714:863" placeholder="INSERT INTO ..." />
-                <marker date="1454507893355" expanded="true" signature="811:861" placeholder="SELECT id FR..files..." />
+                <marker date="1454510488167" expanded="true" signature="215:277" placeholder="SELECT file_..files..." />
+                <marker date="1454510488167" expanded="true" signature="429:474" placeholder="INSERT INTO ..." />
+                <marker date="1454510488167" expanded="true" signature="791:858" placeholder="SELECT COUNT..channels..." />
+                <marker date="1454510488167" expanded="true" signature="1027:1180" placeholder="INSERT INTO ..." />
+                <marker date="1454510488167" expanded="true" signature="1128:1178" placeholder="SELECT id FR..files..." />
               </folding>
             </state>
           </provider>
@@ -91,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/parser_app/parser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="23" />
               <folding>
                 <element signature="e#46#76#0" expanded="true" />
               </folding>
@@ -105,18 +102,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="5" column="35" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="35" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/run.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -181,8 +166,8 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/db_init.py" />
-        <option value="$PROJECT_DIR$/parser_app/models.py" />
         <option value="$PROJECT_DIR$/parser_app/parser.py" />
+        <option value="$PROJECT_DIR$/parser_app/models.py" />
       </list>
     </option>
   </component>
@@ -194,10 +179,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="6" />
+    <option name="x" value="-1" />
     <option name="y" value="24" />
-    <option name="width" value="1906" />
-    <option name="height" value="1152" />
+    <option name="width" value="1922" />
+    <option name="height" value="1153" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -574,7 +559,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="6" y="24" width="1906" height="1152" extended-state="4" />
+    <frame x="-1" y="24" width="1922" height="1153" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -582,12 +567,12 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2652311" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26302084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39932126" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25047618" sideWeight="0.48739496" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25023788" sideWeight="0.4875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25047618" sideWeight="0.5126051" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25023788" sideWeight="0.5125" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -616,14 +601,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.openshift/action_hooks/post_deploy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -663,10 +640,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454507893355" expanded="true" signature="191:253" placeholder="SELECT file_..files..." />
-            <marker date="1454507893355" expanded="true" signature="405:450" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="714:863" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="811:861" placeholder="SELECT id FR..files..." />
+            <marker date="1454510488167" expanded="true" signature="215:277" placeholder="SELECT file_..files..." />
+            <marker date="1454510488167" expanded="true" signature="429:474" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="791:858" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454510488167" expanded="true" signature="1027:1180" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="1128:1178" placeholder="SELECT id FR..files..." />
           </folding>
         </state>
       </provider>
@@ -737,10 +715,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454507893355" expanded="true" signature="191:253" placeholder="SELECT file_..files..." />
-            <marker date="1454507893355" expanded="true" signature="405:450" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="714:863" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="811:861" placeholder="SELECT id FR..files..." />
+            <marker date="1454510488167" expanded="true" signature="215:277" placeholder="SELECT file_..files..." />
+            <marker date="1454510488167" expanded="true" signature="429:474" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="791:858" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454510488167" expanded="true" signature="1027:1180" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="1128:1178" placeholder="SELECT id FR..files..." />
           </folding>
         </state>
       </provider>
@@ -788,10 +767,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454507893355" expanded="true" signature="191:253" placeholder="SELECT file_..files..." />
-            <marker date="1454507893355" expanded="true" signature="405:450" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="714:863" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="811:861" placeholder="SELECT id FR..files..." />
+            <marker date="1454510488167" expanded="true" signature="215:277" placeholder="SELECT file_..files..." />
+            <marker date="1454510488167" expanded="true" signature="429:474" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="791:858" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454510488167" expanded="true" signature="1027:1180" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="1128:1178" placeholder="SELECT id FR..files..." />
           </folding>
         </state>
       </provider>
@@ -1063,22 +1043,31 @@
     <entry file="file://$PROJECT_DIR$/parser_app/parser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="23" />
           <folding>
             <element signature="e#46#76#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-1247972723/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.9683378">
+          <caret line="1825" column="8" selection-start-line="1825" selection-start-column="8" selection-end-line="1825" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/parser_app/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64200795">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.52242744">
+          <caret line="22" column="84" selection-start-line="22" selection-start-column="84" selection-end-line="22" selection-end-column="84" />
           <folding>
-            <marker date="1454507893355" expanded="true" signature="191:253" placeholder="SELECT file_..files..." />
-            <marker date="1454507893355" expanded="true" signature="405:450" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="714:863" placeholder="INSERT INTO ..." />
-            <marker date="1454507893355" expanded="true" signature="811:861" placeholder="SELECT id FR..files..." />
+            <marker date="1454510488167" expanded="true" signature="215:277" placeholder="SELECT file_..files..." />
+            <marker date="1454510488167" expanded="true" signature="429:474" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="791:858" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454510488167" expanded="true" signature="1027:1180" placeholder="INSERT INTO ..." />
+            <marker date="1454510488167" expanded="true" signature="1128:1178" placeholder="SELECT id FR..files..." />
           </folding>
         </state>
       </provider>

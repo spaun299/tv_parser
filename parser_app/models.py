@@ -1,3 +1,4 @@
+# -*- coding: ascii -*-
 from db_init import db, sql_connection
 
 
@@ -17,9 +18,14 @@ class SaveRecordsToDb:
     @staticmethod
     def insert_channels(dict_of_elements):
         for element in dict_of_elements.keys():
-            db.execute(""" INSERT INTO channels(name, link, icon_id)
-                          VALUES ('{name}', '{link}', (SELECT id FROM files WHERE file_link='{file_link}')); """.format(
-                name='test', link=element, file_link=dict_of_elements[element]['icon']))
+            print(dict_of_elements[element]['name'])
+            db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}' OR name='{name}' """.format(
+                link=element, name=dict_of_elements[element]['name'].encode('utf-8')))
+            if db.fetchone()[0] == 0:
+                db.execute(""" INSERT INTO channels(name, link, icon_id)
+                              VALUES ('{name}', '{link}', (SELECT id FROM files WHERE file_link='{file_link}')); """.
+                           format(name=dict_of_elements[element]['name'].encode('utf-8'), link=element,
+                                  file_link=dict_of_elements[element]['icon']))
         sql_connection.commit()
 
     def save_to_db(self, dict_of_elements):

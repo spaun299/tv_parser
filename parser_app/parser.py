@@ -51,9 +51,9 @@ class SeleniumWebDriver(object):
         self.driver.set_window_size(1920, 1080)
         page_height = 0
         elements = {}
-        count = 0
         scroll_height_script = """ return window.innerHeight + window.scrollY """
-        while (page_height != self.driver.execute_script(scroll_height_script)) and (count < 2):
+        count = 0
+        while (page_height != self.driver.execute_script(scroll_height_script)) and count!=1:
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
@@ -63,7 +63,7 @@ class SeleniumWebDriver(object):
                                                  'span[class$="image_type_channel"] > span')).encode('ascii', 'ignore')
                 if (href is not None) and (href not in elements.keys()):
                     elements[href] = {'name': name, 'icon': icon}
-                count += 1
-            time.sleep(5)
+            time.sleep(1)
+            count = 1
         save_records = SaveRecordsToDb()
         save_records.save_to_db(elements)
