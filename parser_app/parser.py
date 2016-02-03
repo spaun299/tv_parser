@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 import config
 import os
+from db_init import db
 
 
 class SeleniumWebDriver(object):
