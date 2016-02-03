@@ -34,6 +34,6 @@
     GRANT ALL privileges ON DATABASE yandex TO admin;
     7:)CREATE ALL SEQUENCES AND TABLES:
     cd sql_scripts
-    sudo -u postgres psql -d yandex -a -f SCRIPT_NAME
+    sudo -u admin psql -d yandex -a -f SCRIPT_NAME
     
  

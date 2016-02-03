@@ -1,35 +1,27 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime, Integer
-import datetime
-import pytz
+from db_init import db, sql_connection
 
 
-Base = declarative_base()
+class SaveRecordsToDb:
+    def __init__(self):
+        pass
 
+    @staticmethod
+    def insert_icons_into_files(list_of_links):
+        db.execute(""" SELECT file_link FROM files WHERE file_link IN {list_of_links}; """.format(
+            list_of_links=tuple(list_of_links)))
+        links = [link['file_link'] for link in db.fetchall()]
+        db.executemany(""" INSERT INTO files(file_link) VALUES(%(link)s); """,
+                       [{'link': elem} for elem in list_of_links if elem not in links])
+        sql_connection.commit()
 
-def get_current_datetime(timezone='Europe/Moscow'):
-    dt = datetime.datetime.now(pytz.timezone(timezone))
-    return datetime.datetime(dt.year, dt.month, dt.day, hour=dt.hour, minute=dt.minute)
+    @staticmethod
+    def insert_channels(dict_of_elements):
+        for element in dict_of_elements.keys():
+            db.execute(""" INSERT INTO channels(name, link, icon_id)
+                          VALUES ('{name}', '{link}', (SELECT id FROM files WHERE file_link='{file_link}')); """.format(
+                name='test', link=element, file_link=dict_of_elements[element]['icon']))
+        sql_connection.commit()
 
-
-class ChannelLink(Base):
-    __tablename__ = 'channel_link'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(200), nullable=False)
-    url = Column(String(500), nullable=False)
-    language = Column(String(2), default='ru')
-    md_tm = Column(DateTime, default=get_current_datetime())
-
-    def __init__(self, name=None, url=None, language='ru'):
-        self.name = name
-        self.url = url
-        self.language = language
-
-
-class ParserInfo(Base):
-    __tablename__ = 'parser_info'
-    id = Column(Integer, primary_key=True, autoincrement=True, unique=True, nullable=False)
-    main_url = Column(String(200), nullable=False)
-
-    def __init__(self, main_url=None):
-        self.main_url = main_url
+    def save_to_db(self, dict_of_elements):
+        self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
+        self.insert_channels(dict_of_elements)

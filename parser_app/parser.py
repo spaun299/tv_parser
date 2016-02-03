@@ -5,7 +5,8 @@ from selenium.webdriver.common.keys import Keys
 import time
 import config
 import os
-from db_init import db
+from db_init import db, sql_connection
+from .models import SaveRecordsToDb
 
 
 class SeleniumWebDriver(object):
@@ -50,18 +51,19 @@ class SeleniumWebDriver(object):
         self.driver.set_window_size(1920, 1080)
         page_height = 0
         elements = {}
+        count = 0
         scroll_height_script = """ return window.innerHeight + window.scrollY """
-        while page_height != self.driver.execute_script(scroll_height_script):
+        while (page_height != self.driver.execute_script(scroll_height_script)) and (count < 2):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
                 name = a.find_element_by_css_selector('span.tv-channel-title__text').text
-                print(type(name))
-                print(name.encode('utf-8'))
                 href = a.get_attribute('href').encode('ascii', 'ignore')
                 icon = self.get_background_image(a.find_element_by_css_selector('div.tv-channel-title__icon > '
                                                  'span[class$="image_type_channel"] > span')).encode('ascii', 'ignore')
                 if (href is not None) and (href not in elements.keys()):
                     elements[href] = {'name': name, 'icon': icon}
-                print(elements)
+                count += 1
             time.sleep(5)
+        save_records = SaveRecordsToDb()
+        save_records.save_to_db(elements)
