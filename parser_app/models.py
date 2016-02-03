@@ -6,6 +6,10 @@ class SaveRecordsToDb:
     def __init__(self):
         pass
 
+    def save_to_db(self, dict_of_elements):
+        self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
+        self.insert_channels(dict_of_elements)
+
     @staticmethod
     def insert_icons_into_files(list_of_links):
         db.execute(""" SELECT file_link FROM files WHERE file_link IN {list_of_links}; """.format(
@@ -28,6 +32,7 @@ class SaveRecordsToDb:
                                   file_link=dict_of_elements[element]['icon']))
         sql_connection.commit()
 
-    def save_to_db(self, dict_of_elements):
-        self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
-        self.insert_channels(dict_of_elements)
+    @staticmethod
+    def get_channel_id_and_link():
+        db.execute(""" SELECT id, link FROM channels; """)
+        return [{'id': channel_id, 'link': link} for channel_id, link in db.fetchall()]

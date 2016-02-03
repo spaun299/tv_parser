@@ -35,5 +35,3 @@
     7:)CREATE ALL SEQUENCES AND TABLES:
     cd sql_scripts
     sudo -u admin psql -d yandex -a -f SCRIPT_NAME
-    
- 

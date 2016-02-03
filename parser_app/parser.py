@@ -53,6 +53,7 @@ class SeleniumWebDriver(object):
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
         count = 0
+        SaveRecordsToDb.get_channel_id_and_url()
         while (page_height != self.driver.execute_script(scroll_height_script)) and count!=1:
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -67,3 +68,4 @@ class SeleniumWebDriver(object):
             count = 1
         save_records = SaveRecordsToDb()
         save_records.save_to_db(elements)
+
