@@ -77,5 +77,6 @@ class SeleniumWebDriver(object):
             self.driver.get(id_and_link['link'])
             time.sleep(2)
             if '404' not in self.driver.title:
+                pass
 
 
