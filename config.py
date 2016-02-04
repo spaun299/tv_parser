@@ -5,6 +5,8 @@ def database_url():
     # db_url = os.environ['OPENSHIFT_POSTGRESQL_DB_URL'] if os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL') else \
     #     'postgresql://admin:1111@localhost:5432/yandex'
     db_name = 'yandex'
+    for a in os.environ:
+        print(a)
     if os.environ.get('OPENSHIFT_POSTGRESQL_DB_URL'):
         host = os.environ['OPENSHIFT_POSTGRESQL_DB_HOST']
         port = os.environ['OPENSHIFT_POSTGRESQL_DB_PORT']
@@ -23,4 +25,3 @@ DEBUG = True
 MAIL_USERNAME = 'tvparser.in.ua@gmail.com'
 MAIL_PASSWORD = 'dlvbcbj323~sdaf13d0dssfdfd'
 MAIN_PARSE_URL = 'https://tv.yandex.ua/187?grid=all&period=all-day'
-
