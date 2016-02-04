@@ -2,11 +2,11 @@ import datetime
 from parser_app.parser import SeleniumWebDriver
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
-from utils.decorators import function_time
+from utils.decorators import execution_time
 driver = SeleniumWebDriver()
 
 
-@function_time
+@execution_time
 def run(*args):
     driver.run()
     # print(args)

@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 
 
-def function_time(func):
+def execution_time(func):
     @wraps(func)
     def timer(*args, **kwargs):
         time = datetime.datetime.now()

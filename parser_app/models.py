@@ -32,6 +32,11 @@ class SaveRecordsToDb:
                                   file_link=dict_of_elements[element]['icon']))
         sql_connection.commit()
 
+
+class GetRecordsFromDb:
+    def __init__(self):
+        pass
+
     @staticmethod
     def get_channel_id_and_link():
         db.execute(""" SELECT id, link FROM channels; """)

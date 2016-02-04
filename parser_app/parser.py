@@ -6,7 +6,7 @@ import time
 import config
 import os
 from db_init import db, sql_connection
-from .models import SaveRecordsToDb
+from .models import SaveRecordsToDb, GetRecordsFromDb
 
 
 class SeleniumWebDriver(object):
@@ -14,6 +14,8 @@ class SeleniumWebDriver(object):
     def __init__(self, url=config.MAIN_PARSE_URL):
         self.driver = self.get_phantomjs_driver()
         self.url = url
+        self.driver.get(self.url)
+        self.driver.set_window_size(1920, 1080)
 
     @staticmethod
     def get_channel_xpath():
@@ -47,13 +49,11 @@ class SeleniumWebDriver(object):
         return driver
 
     def run(self):
-        self.driver.get(self.url)
-        self.driver.set_window_size(1920, 1080)
+
         page_height = 0
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
         count = 0
-        print(SaveRecordsToDb.get_channel_id_and_link())
         while (page_height != self.driver.execute_script(scroll_height_script)) and count != 1:
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -68,4 +68,14 @@ class SeleniumWebDriver(object):
             count = 1
         save_records = SaveRecordsToDb()
         save_records.save_to_db(elements)
+        self.parse_channel_details()
+
+
+    def parse_channel_details(self):
+        ids_and_links = GetRecordsFromDb.get_channel_id_and_link()
+        for id_and_link in ids_and_links:
+            self.driver.get(id_and_link['link'])
+            time.sleep(2)
+            if '404' not in self.driver.title:
+
 

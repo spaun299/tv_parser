@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45de6a8f-23f4-4a1d-a6c3-2302ceeae5ba" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/decorators.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/decorators.py" afterPath="$PROJECT_DIR$/utils/decorators.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ghostdriver.log" afterPath="$PROJECT_DIR$/ghostdriver.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_app/models.py" afterPath="$PROJECT_DIR$/parser_app/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser_app/parser.py" afterPath="$PROJECT_DIR$/parser_app/parser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run.py" afterPath="$PROJECT_DIR$/run.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="yandex.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -21,7 +21,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/yandex$wsgi.coverage" NAME="wsgi Coverage Results" MODIFIED="1448798152841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/yandex$run.coverage" NAME="run Coverage Results" MODIFIED="1454576614078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yandex$run.coverage" NAME="run Coverage Results" MODIFIED="1454577242321" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -42,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16622691">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -82,28 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/parser_app/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-              <folding>
-                <marker date="1454575991929" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
-                <marker date="1454575991929" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
-                <marker date="1454575991929" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
-                <marker date="1454575991929" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
-                <marker date="1454575991929" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
-                <marker date="1454575991929" expanded="true" signature="1663:1692" placeholder="SELECT id, l..channels..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/parser_app/parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.8575198">
+              <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
               <folding>
                 <element signature="e#46#76#0" expanded="true" />
               </folding>
@@ -111,23 +94,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="1_create_table_channels_files.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sql_scripts/1_create_table_channels_files.sql">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/parser_app/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2_alter_table_channel.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sql_scripts/2_alter_table_channel.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding>
-                <marker date="1454512064099" expanded="true" signature="0:57" placeholder="ALTER TABLE channels..." />
+                <marker date="1454577242308" expanded="true" signature="87:1585" placeholder="..." />
+                <marker date="1454577242308" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
+                <marker date="1454577242308" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
+                <marker date="1454577242308" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
+                <marker date="1454577242308" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
+                <marker date="1454577242308" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
+                <marker date="1454577242308" expanded="true" signature="1611:1849" placeholder="..." />
+                <marker date="1454577242308" expanded="true" signature="1726:1755" placeholder="SELECT id, l..channels..." />
               </folding>
             </state>
           </provider>
@@ -173,10 +153,10 @@
         <option value="$PROJECT_DIR$/db_init.py" />
         <option value="$PROJECT_DIR$/sql_scripts/2_alter_table_channel.sql" />
         <option value="$PROJECT_DIR$/readme.md" />
+        <option value="$PROJECT_DIR$/utils/decorators.py" />
+        <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/parser_app/models.py" />
         <option value="$PROJECT_DIR$/parser_app/parser.py" />
-        <option value="$PROJECT_DIR$/run.py" />
-        <option value="$PROJECT_DIR$/utils/decorators.py" />
       </list>
     </option>
   </component>
@@ -302,7 +282,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../api_tv_web" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -579,7 +559,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26302084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39932126" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25023788" sideWeight="0.48541668" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25023788" sideWeight="0.48541668" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25023788" sideWeight="0.51458335" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -633,12 +613,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454575991929" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
-            <marker date="1454575991929" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
-            <marker date="1454575991929" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
-            <marker date="1454575991929" expanded="true" signature="1663:1692" placeholder="SELECT id, l..channels..." />
+            <marker date="1454577242308" expanded="true" signature="87:1585" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
+            <marker date="1454577242308" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454577242308" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
+            <marker date="1454577242308" expanded="true" signature="1611:1849" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="1726:1755" placeholder="SELECT id, l..channels..." />
           </folding>
         </state>
       </provider>
@@ -709,12 +691,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454575991929" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
-            <marker date="1454575991929" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
-            <marker date="1454575991929" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
-            <marker date="1454575991929" expanded="true" signature="1663:1692" placeholder="SELECT id, l..channels..." />
+            <marker date="1454577242308" expanded="true" signature="87:1585" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
+            <marker date="1454577242308" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454577242308" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
+            <marker date="1454577242308" expanded="true" signature="1611:1849" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="1726:1755" placeholder="SELECT id, l..channels..." />
           </folding>
         </state>
       </provider>
@@ -762,12 +746,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
           <folding>
-            <marker date="1454575991929" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
-            <marker date="1454575991929" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
-            <marker date="1454575991929" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
-            <marker date="1454575991929" expanded="true" signature="1663:1692" placeholder="SELECT id, l..channels..." />
+            <marker date="1454577242308" expanded="true" signature="87:1585" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
+            <marker date="1454577242308" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454577242308" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
+            <marker date="1454577242308" expanded="true" signature="1611:1849" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="1726:1755" placeholder="SELECT id, l..channels..." />
           </folding>
         </state>
       </provider>
@@ -908,13 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser_app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12857144">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1011,7 +990,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <marker date="1454512064099" expanded="true" signature="0:57" placeholder="ALTER TABLE channels..." />
+            <marker date="1454512064099" expanded="true" signature="-1:-1" placeholder="ALTER TABLE channels..." />
           </folding>
         </state>
       </provider>
@@ -1036,27 +1015,37 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser_app/models.py">
+    <entry file="file://$PROJECT_DIR$/utils/decorators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.094986804">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
-            <marker date="1454575991929" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
-            <marker date="1454575991929" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
-            <marker date="1454575991929" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
-            <marker date="1454575991929" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
-            <marker date="1454575991929" expanded="true" signature="1663:1692" placeholder="SELECT id, l..channels..." />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parser_app/parser.py">
+    <entry file="file://$PROJECT_DIR$/parser_app/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding>
-            <element signature="e#46#76#0" expanded="true" />
+            <marker date="1454577242308" expanded="true" signature="87:1585" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="398:460" placeholder="SELECT file_..files..." />
+            <marker date="1454577242308" expanded="true" signature="612:657" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="974:1041" placeholder="SELECT COUNT..channels..." />
+            <marker date="1454577242308" expanded="true" signature="1210:1363" placeholder="INSERT INTO ..." />
+            <marker date="1454577242308" expanded="true" signature="1311:1361" placeholder="SELECT id FR..files..." />
+            <marker date="1454577242308" expanded="true" signature="1611:1849" placeholder="..." />
+            <marker date="1454577242308" expanded="true" signature="1726:1755" placeholder="SELECT id, l..channels..." />
           </folding>
         </state>
       </provider>
@@ -1069,22 +1058,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/decorators.py">
+    <entry file="file://$PROJECT_DIR$/parser_app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28496042">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run.py">
+    <entry file="file://$PROJECT_DIR$/parser_app/parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16622691">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.8575198">
+          <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#46#76#0" expanded="true" />
           </folding>
         </state>
       </provider>
