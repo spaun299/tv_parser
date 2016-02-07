@@ -78,6 +78,7 @@ class SeleniumWebDriver(object):
             channel.update()
             self.driver.get(id_and_link['link'])
             time.sleep(2)
+            
             if '404' not in self.driver.title:
                 if not channel.description:
                     channel.description = self.driver.find_element_by_css_selector(
