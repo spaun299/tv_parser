@@ -75,6 +75,7 @@ class SeleniumWebDriver(object):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         for id_and_link in ids_and_links:
             channel = Channel(channel_id=id_and_link['id'])
+            channel.update()
             self.driver.get(id_and_link['link'])
             time.sleep(2)
             if '404' not in self.driver.title:
