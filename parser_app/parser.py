@@ -6,9 +6,9 @@ import time
 import config
 import os
 from db_init import db, sql_connection
-from utils.email import SendEmail
+from utils.send_email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel
-
+from utils.decorators import send_email_decorator
 send_email = SendEmail().send_email
 
 
@@ -52,6 +52,7 @@ class SeleniumWebDriver(object):
         driver = webdriver.PhantomJS(**conf)
         return driver
 
+    @send_email_decorator
     def parse_url_channels(self):
 
         page_height = 0
@@ -72,10 +73,10 @@ class SeleniumWebDriver(object):
             count = 1
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
-        send_email(subject='Parser notification',
-                   text='Url channels parsed successfully. '
-                        '{elements_count} new channels'.format(elements_count=elements_count))
+        return 'Parser notification', \
+               'Url channels parsed successfully.{elements_count} new channels'.format(elements_count=elements_count)
 
+    @send_email_decorator
     def parse_tv_programs(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         for id_and_link in ids_and_links:
@@ -91,3 +92,4 @@ class SeleniumWebDriver(object):
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
+        return 'Parser notification', 'Tv programs parsed successfully.'

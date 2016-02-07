@@ -1,8 +1,8 @@
 import config
 import smtplib
-from email.mime.text import MIMEText
 import sys
 import traceback
+from email.mime.text import MIMEText
 
 
 class SendEmail:
