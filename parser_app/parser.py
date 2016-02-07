@@ -16,6 +16,7 @@ class SeleniumWebDriver(object):
         self.url = url
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)
+        assert url in self.driver.current_url, "Can't open url: %s" % url
 
     @staticmethod
     def get_channel_xpath():
@@ -25,7 +26,7 @@ class SeleniumWebDriver(object):
 
     @staticmethod
     def get_channel_css_selector():
-        return 'div.channel > div.tv-channel__title > div > div.tv-channel-title__link > a'
+        return 'div.tv-channel > div.tv-channel__title > div > div.tv-channel-title__link > a'
 
     def get_background_image(self, selector):
         return self.driver.execute_script("""
@@ -57,11 +58,7 @@ class SeleniumWebDriver(object):
         while (page_height != self.driver.execute_script(scroll_height_script)) and count != 1:
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            print(self.driver.current_url)
-            print('aaa')
             for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
-                print(a)
-                print('sss')
                 name = a.find_element_by_css_selector('span.tv-channel-title__text').text
                 href = a.get_attribute('href').encode('ascii', 'ignore')
                 icon = self.get_background_image(a.find_element_by_css_selector('div.tv-channel-title__icon > '
@@ -71,17 +68,13 @@ class SeleniumWebDriver(object):
             time.sleep(1)
             count = 1
         save_records = SaveRecordsToDb()
-        print(elements)
-        save_records.save_to_db(elements)
+        save_records.save_channels_to_db(elements)
         self.parse_channel_details()
 
     def parse_channel_details(self):
-        channel_record = GetRecordsFromDb()
-        ids_and_links = channel_record.get_channels_id_link_and_bool_description()
+        ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         for id_and_link in ids_and_links:
-            channel_record.channel_id = id_and_link['id']
-            channel = channel_record.get_channel()
-            channel = Channel(channel_id=channel['id'], link=channel['link']).update_fields_if_empty()
+            channel = Channel(channel_id=id_and_link['id']).update()
             self.driver.get(id_and_link['link'])
             time.sleep(2)
             if '404' not in self.driver.title:
