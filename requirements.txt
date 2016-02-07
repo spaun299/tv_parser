@@ -2,3 +2,4 @@ selenium
 APScheduler
 psycopg2
 pytz
+flask>=0.10

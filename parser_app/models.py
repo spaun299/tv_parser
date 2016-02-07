@@ -7,6 +7,7 @@ class SaveRecordsToDb(object):
         self.test = 'lllllaaaa'
 
     def save_channels_to_db(self, dict_of_elements):
+        elements_count = 0
         self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
         for element in dict_of_elements.keys():
             db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}' OR name='{name}' """.format(
@@ -16,7 +17,9 @@ class SaveRecordsToDb(object):
                               VALUES ('{name}', '{link}', (SELECT id FROM files WHERE file_link='{file_link}')); """.
                            format(name=dict_of_elements[element]['name'].encode('utf-8'), link=element,
                                   file_link=dict_of_elements[element]['icon']))
+                elements_count += 1
         sql_connection.commit()
+        return elements_count
 
     @staticmethod
     def insert_icons_into_files(list_of_links):

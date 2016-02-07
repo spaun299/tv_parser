@@ -6,7 +6,10 @@ import time
 import config
 import os
 from db_init import db, sql_connection
+from utils.email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel
+
+send_email = SendEmail().send_email
 
 
 class SeleniumWebDriver(object):
@@ -49,7 +52,7 @@ class SeleniumWebDriver(object):
         driver = webdriver.PhantomJS(**conf)
         return driver
 
-    def run(self):
+    def parse_url_channels(self):
 
         page_height = 0
         elements = {}
@@ -68,8 +71,10 @@ class SeleniumWebDriver(object):
             time.sleep(1)
             count = 1
         save_records = SaveRecordsToDb()
-        save_records.save_channels_to_db(elements)
-        self.parse_channel_details()
+        elements_count = save_records.save_channels_to_db(elements)
+        send_email(subject='Parser notification',
+                   text='Url channels parsed successfully. '
+                        '{elements_count} new channels'.format(elements_count=elements_count))
 
     def parse_channel_details(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
@@ -78,7 +83,6 @@ class SeleniumWebDriver(object):
             channel.update()
             self.driver.get(id_and_link['link'])
             time.sleep(2)
-            
             if '404' not in self.driver.title:
                 if not channel.description:
                     channel.description = self.driver.find_element_by_css_selector(
