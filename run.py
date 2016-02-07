@@ -18,20 +18,13 @@ def parse_url_channels():
     except Exception as e:
         send_email(exception=e)
 
-@execution_time
-def run(*args):
-    driver.run()
-    # print(args)
-    # scheduler = BackgroundScheduler()
-    # scheduler.add_job(driver.run, 'interval', seconds=10, id=str(time.time()))
-    # scheduler.start()
-    # driver.run()
-    # try:
-    #         This is here to simulate application activity (which keeps the main thread alive).
-        # while True:
-        #     time.sleep(2)
-    # except (KeyboardInterrupt, SystemExit):
-    #         Not strictly necessary if daemonic mode is enabled but should be done if possible
-        # scheduler.shutdown()
+
+@app.route('/parse_programs')
+def parse_programs():
+    try:
+        driver.parse_tv_programs()
+    except Exception as e:
+        send_email(exception=e)
+
 if __name__ == '__main__':
-    run()
+    app.run()

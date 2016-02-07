@@ -76,7 +76,7 @@ class SeleniumWebDriver(object):
                    text='Url channels parsed successfully. '
                         '{elements_count} new channels'.format(elements_count=elements_count))
 
-    def parse_channel_details(self):
+    def parse_tv_programs(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         for id_and_link in ids_and_links:
             channel = Channel(channel_id=id_and_link['id'])
@@ -88,3 +88,6 @@ class SeleniumWebDriver(object):
                     channel.description = self.driver.find_element_by_css_selector(
                                          "tr.b-row div.b-tv-channel-content__text").text
                     channel.update()
+            else:
+                send_email(subject='Page not found',
+                           text='Page {page} not found'.format(page=self.driver.current_url))
