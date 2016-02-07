@@ -4,7 +4,7 @@ from db_init import db, sql_connection
 
 class SaveRecordsToDb(object):
     def __init__(self):
-        pass
+        self.test = 'lllllaaaa'
 
     def save_channels_to_db(self, dict_of_elements):
         self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
@@ -27,17 +27,20 @@ class SaveRecordsToDb(object):
                        [{'link': elem} for elem in list_of_links if elem not in links])
         sql_connection.commit()
 
-
-
     @staticmethod
-    def update_channel(channel_id, key, value):
-        db.execute(""" UPDATE channels SET %(key)s='%(value)s' WHERE id='%(channel_id)s';""" %
-                   {'key': key, 'value': value, 'channel_id': channel_id})
+    def update_table(table_name, item_id, key, value):
+        db.execute(""" UPDATE %(table_name)s SET %(key)s='%(value)s' WHERE id=%(item_id)s;""" %
+                   {'table_name': table_name, 'key': key, 'value': value, 'item_id': item_id})
+        sql_connection.commit()
 
-    def save_channel(self):
-        keys, values = [(','.join(key), ','.join(value)) for key, value in self.__dict__]
-        print(keys)
-        print(values)
+    def save(self, table_name):
+        items = {key: value for key, value in self.__dict__.items() if (key in getattr(self, 'db_fields')) and value}
+        fields_name = ",".join(items.keys())
+        fields_value = "','".join(items.values())
+        db.execute(""" INSERT INTO %(table_name)s(%(keys)s) VALUES ('%(values)s');""" % {'table_name': table_name,
+                                                                                         'keys': fields_name,
+                                                                                         'values': fields_value})
+        sql_connection.commit()
 
 
 class GetRecordsFromDb:
@@ -70,6 +73,7 @@ class Channel(SaveRecordsToDb):
         self.icon_id = icon_id
         self.channel_language = language
         self.description = description
+        self.db_fields = ['name', 'link', 'icon_id', 'channel_language', 'description']
 
     def check_channel_field_exists(self, key):
         db.execute(""" SELECT COUNT(%(key)s) FROM channels WHERE id='%(channel_id)s' """ %
@@ -82,9 +86,9 @@ class Channel(SaveRecordsToDb):
                 cls_field = getattr(self, key, None)
                 if value:
                     if value != cls_field and cls_field:
-                        self.update_channel(self.channel_id, key, cls_field)
+                        self.update_table('channels', self.channel_id, key, cls_field)
                     if not cls_field:
                         setattr(self, key, value)
                 else:
                     if cls_field:
-                        self.update_channel(self.channel_id, key, cls_field)
+                        self.update_table('channels', self.channel_id, key, cls_field)

@@ -74,10 +74,11 @@ class SeleniumWebDriver(object):
     def parse_channel_details(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         for id_and_link in ids_and_links:
-            channel = Channel(channel_id=id_and_link['id']).update()
+            channel = Channel(channel_id=id_and_link['id'])
             self.driver.get(id_and_link['link'])
             time.sleep(2)
             if '404' not in self.driver.title:
-                if not id_and_link['description']:
-                    desciption = self.driver.find_element_by_css_selector(
-                        "tr.b-row div.b-tv-channel-content__text").text
+                if not channel.description:
+                    channel.description = self.driver.find_element_by_css_selector(
+                                         "tr.b-row div.b-tv-channel-content__text").text
+                    channel.update()
