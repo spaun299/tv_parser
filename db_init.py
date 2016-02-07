@@ -1,5 +1,6 @@
 import config
 import psycopg2
+import psycopg2.extras
 
-connection = psycopg2.connect(config.POSTGRES_DATABASE_URI)
-db = connection.cursor()
+sql_connection = psycopg2.connect(config.POSTGRES_DATABASE_URI)
+db = sql_connection.cursor(cursor_factory=psycopg2.extras.DictCursor)

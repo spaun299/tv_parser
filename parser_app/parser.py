@@ -1,37 +1,90 @@
+#!/usr/bin/env python
+# -*- coding: ascii -*-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import config
 import os
+from db_init import db, sql_connection
+from .models import SaveRecordsToDb, GetRecordsFromDb, Channel
 
 
 class SeleniumWebDriver(object):
 
     def __init__(self, url=config.MAIN_PARSE_URL):
-        self.driver = webdriver.PhantomJS(**self.phantomjs_config())
+        self.driver = self.get_phantomjs_driver()
         self.url = url
-
-    @staticmethod
-    def phantomjs_config():
-        conf = dict(service_args=['--ssl-protocol=any'], port=8080)
-        if os.environ.get('OPENSHIFT_DATA_DIR'):
-            conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
-            conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
-            conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
-        return conf
-
-    def run(self):
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)
-        page_height = 0
-        scroll_height_script = """ return window.innerHeight + window.scrollY """
 
-        while page_height != self.driver.execute_script(scroll_height_script):
+    @staticmethod
+    def get_channel_xpath():
+        return "//div/div[@class='tv-grid__items']/div[@class='tv-grid__page']/div" \
+               "[@class='tv-grid__item tv-grid__item_is-now_no']/div[@class='tv-channel']/" \
+               "div[@class='tv-channel__title']/div/div[@class='tv-channel-title__link']/a"
+
+    @staticmethod
+    def get_channel_css_selector():
+        return 'div.channel > div.tv-channel__title > div > div.tv-channel-title__link > a'
+
+    def get_background_image(self, selector):
+        return self.driver.execute_script("""
+                var element = arguments[0],
+                style = element.currentStyle || window.getComputedStyle(element, false);
+                return style.backgroundImage.slice(4, -1);
+                """, selector)
+
+    @staticmethod
+    def get_phantomjs_driver():
+        conf = dict(service_args=['--ssl-protocol=any'])
+        if os.environ.get('OPENSHIFT_DATA_DIR'):
+            # conf['service_log_path'] = os.environ.get('OPENSHIFT_PYTHON_LOG_DIR')+'/ghostdriver.log'
+            # conf['executable_path'] = os.environ.get('OPENSHIFT_DATA_DIR') + '/phantomjs/bin/phantomjs'
+            # conf['service_args'].append('--webdriver={ip}:15002'.format(ip=os.environ.get('OPENSHIFT_PYTHON_IP')))
+            capabilities = dict(browserName='phantomjs', acceptSslCerts=True, javascriptEnabled=True)
+            driver = webdriver.Remote(command_executor='http://'+os.environ.get('OPENSHIFT_PYTHON_IP')+':15005',
+                                      desired_capabilities=capabilities)
+            return driver
+        driver = webdriver.PhantomJS(**conf)
+        return driver
+
+    def run(self):
+
+        page_height = 0
+        elements = {}
+        scroll_height_script = """ return window.innerHeight + window.scrollY """
+        count = 0
+        while (page_height != self.driver.execute_script(scroll_height_script)) and count != 1:
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            for a in self.driver.find_elements_by_class_name('tv-channel-title__link'):
-                print(a.text)
-            time.sleep(5)
-        channels_title_div = self.driver.find_elements_by_class_name('tv-channel-title__link')
-        channels_url = map(lambda div: div.get_attribute('href'), filter(lambda href: href.get_attribute('href'),
-                           channels_title_div))
+            print(self.driver.current_url)
+            print('aaa')
+            for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
+                print(a)
+                print('sss')
+                name = a.find_element_by_css_selector('span.tv-channel-title__text').text
+                href = a.get_attribute('href').encode('ascii', 'ignore')
+                icon = self.get_background_image(a.find_element_by_css_selector('div.tv-channel-title__icon > '
+                                                 'span[class$="image_type_channel"] > span')).encode('ascii', 'ignore')
+                if (href is not None) and (href not in elements.keys()):
+                    elements[href] = {'name': name, 'icon': icon}
+            time.sleep(1)
+            count = 1
+        save_records = SaveRecordsToDb()
+        print(elements)
+        save_records.save_to_db(elements)
+        self.parse_channel_details()
+
+    def parse_channel_details(self):
+        channel_record = GetRecordsFromDb()
+        ids_and_links = channel_record.get_channels_id_link_and_bool_description()
+        for id_and_link in ids_and_links:
+            channel_record.channel_id = id_and_link['id']
+            channel = channel_record.get_channel()
+            channel = Channel(channel_id=channel['id'], link=channel['link']).update_fields_if_empty()
+            self.driver.get(id_and_link['link'])
+            time.sleep(2)
+            if '404' not in self.driver.title:
+                if not id_and_link['description']:
+                    desciption = self.driver.find_element_by_css_selector(
+                        "tr.b-row div.b-tv-channel-content__text").text
