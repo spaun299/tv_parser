@@ -4,7 +4,7 @@ from db_init import db, sql_connection
 
 class SaveRecordsToDb(object):
     def __init__(self):
-        self.test = 'lllllaaaa'
+        pass
 
     def save_channels_to_db(self, dict_of_elements):
         elements_count = 0
@@ -95,3 +95,7 @@ class Channel(SaveRecordsToDb):
                 else:
                     if cls_field:
                         self.update_table('channels', self.channel_id, key, cls_field)
+
+
+class TvProgram(SaveRecordsToDb):
+    pass

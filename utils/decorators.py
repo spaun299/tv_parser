@@ -20,8 +20,7 @@ def allow_ip(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if request.remote_addr in ALLOWED_iPS:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         else:
             return "You don't have permissions for this operation"
-        return func
     return wrapper

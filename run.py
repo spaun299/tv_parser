@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from utils.send_email import SendEmail
 import config
 from flask import request
-from .utils.decorators import allow_ip
+from utils.decorators import allow_ip
 
 
 driver = SeleniumWebDriver()
