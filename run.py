@@ -2,6 +2,8 @@ from parser_app.parser import SeleniumWebDriver
 from flask import Flask, render_template
 from utils.send_email import SendEmail
 import config
+from flask import request
+from .utils.decorators import allow_ip
 
 
 driver = SeleniumWebDriver()
@@ -11,7 +13,9 @@ app.config.from_object(config)
 
 
 @app.route('/parse_url_channels')
+@allow_ip
 def parse_url_channels():
+    print(request.remote_addr)
     try:
         driver.parse_url_channels()
         return render_template('log.html', message='Successful')
@@ -21,6 +25,7 @@ def parse_url_channels():
 
 
 @app.route('/parse_programs')
+@allow_ip
 def parse_programs():
     try:
         driver.parse_tv_programs()

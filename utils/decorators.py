@@ -1,6 +1,8 @@
 import datetime
 from functools import wraps
 from .send_email import SendEmail
+from flask import request
+from config import ALLOWED_iPS
 
 
 def send_email_decorator(func):
@@ -12,3 +14,14 @@ def send_email_decorator(func):
         SendEmail().send_email(subject=subject, text=text)
         return func
     return send
+
+
+def allow_ip(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if request.remote_addr in ALLOWED_iPS:
+            func(*args, **kwargs)
+        else:
+            return "You don't have permissions for this operation"
+        return func
+    return wrapper

@@ -25,3 +25,4 @@ DEBUG = True
 MAIL_USERNAME = 'tvparser.in.ua@gmail.com'
 MAIL_PASSWORD = 'dlvbcbj323~sdaf13d0dssfdfd'
 MAIN_PARSE_URL = 'https://tv.yandex.ua/187?grid=all&period=all-day'
+ALLOWED_iPS = ['127.0.0.1']
