@@ -85,10 +85,23 @@ class SeleniumWebDriver(object):
             self.driver.get(id_and_link['link'])
             time.sleep(2)
             if '404' not in self.driver.title:
-                if not channel.description:
-                    channel.description = self.driver.find_element_by_css_selector(
-                                         "tr.b-row div.b-tv-channel-content__text").text
+                if not channel.description or not channel.web_site:
+                    channel_description = self.driver.find_elements_by_css_selector(
+                                         "tr.b-row div.b-tv-channel-content__text")
+                    channel_description = channel_description[0].text if channel_description else \
+                        "This channel does not have description"
+                    channel_web_site = self.driver.find_elements_by_css_selector(
+                                         "div.b-tv-channel-content__channel-info > "
+                                         "div.b-tv-channel-content__links > a")
+                    channel_web_site = channel_web_site[0].get_attribute('href') if channel_web_site else \
+                        "This channel does not have web site"
+                    if len(channel_description) > Channel.description['length']:
+                        channel_description = channel_description[:Channel.description['length']]
+                    if len(channel_web_site) > Channel.web_site['length']:
+                        channel_web_site = channel_web_site[:Channel.web_site['length']]
+                    channel.description, channel.web_site = channel_description, channel_web_site
                     channel.update()
+
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))

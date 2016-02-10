@@ -1,0 +1,1 @@
+ALTER TABLE channels ADD COLUMN web_site VARCHAR(200);

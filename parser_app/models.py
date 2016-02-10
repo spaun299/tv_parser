@@ -68,7 +68,14 @@ class GetRecordsFromDb:
 
 
 class Channel(SaveRecordsToDb):
-    def __init__(self, channel_id=None, name=None, link=None, icon_id=None, language=None, description=None):
+    name = dict(length=200)
+    link = dict(length=500)
+    channel_language = dict(length=2)
+    description = dict(length=1000)
+    web_site = dict(length=200)
+
+    def __init__(self, channel_id=None, name=None, link=None, icon_id=None, language=None, description=None,
+                 web_site=None):
         super(Channel, self).__init__()
         self.channel_id = channel_id
         self.name = name
@@ -76,7 +83,8 @@ class Channel(SaveRecordsToDb):
         self.icon_id = icon_id
         self.channel_language = language
         self.description = description
-        self.db_fields = ['name', 'link', 'icon_id', 'channel_language', 'description']
+        self.web_site = web_site
+        self.db_fields = ['name', 'link', 'icon_id', 'channel_language', 'description', 'web_site']
 
     def check_channel_field_exists(self, key):
         db.execute(""" SELECT COUNT(%(key)s) FROM channels WHERE id='%(channel_id)s' """ %
