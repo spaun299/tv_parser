@@ -5,7 +5,9 @@ from selenium.webdriver.common.keys import Keys
 import time
 import config
 import os
+import datetime
 from db_init import db, sql_connection
+import json
 from utils.send_email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel
 from utils.decorators import send_email_decorator
@@ -101,6 +103,14 @@ class SeleniumWebDriver(object):
                         channel_web_site = channel_web_site[:Channel.web_site['length']]
                     channel.description, channel.web_site = channel_description, channel_web_site
                     channel.update()
+                dates = set()
+                for date in self.driver.find_elements_by_css_selector('div.tv-filter-days__viewport > '
+                                                                      'div.tv-filter-days__items > '
+                                                                      'div.tv-filter-days__item'):
+                    date_time = json.loads(date.get_attribute('data-bem'))['tv-filter-days__item']['value'].split(
+                        'T')[0]
+                    dates.add(date_time)
+                print(dates)
 
             else:
                 send_email(subject='Page not found',
