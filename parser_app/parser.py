@@ -6,6 +6,8 @@ import time
 import config
 import os
 import datetime
+from utils.date_and_time import get_date_time
+import re
 from db_init import db, sql_connection
 import json
 from utils.send_email import SendEmail
@@ -81,6 +83,7 @@ class SeleniumWebDriver(object):
     @send_email_decorator
     def parse_tv_programs(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
+        date_today = get_date_time()
         for id_and_link in ids_and_links:
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
@@ -103,14 +106,16 @@ class SeleniumWebDriver(object):
                         channel_web_site = channel_web_site[:Channel.web_site['length']]
                     channel.description, channel.web_site = channel_description, channel_web_site
                     channel.update()
-                dates = set()
+                dates_of_week = list()
                 for date in self.driver.find_elements_by_css_selector('div.tv-filter-days__viewport > '
                                                                       'div.tv-filter-days__items > '
                                                                       'div.tv-filter-days__item'):
-                    date_time = json.loads(date.get_attribute('data-bem'))['tv-filter-days__item']['value'].split(
-                        'T')[0]
-                    dates.add(date_time)
-                print(dates)
+                    date_of_week = re.findall(r'(\d{4}-\d{2}-\d{2})T', date.get_attribute('data-bem'))[0]
+                    if datetime.datetime.strptime(date_today, '%Y-%m-%d') <= datetime.datetime.strptime(date_of_week, '%Y-%m-%d'):
+                        dates_of_week.append(date_of_week)
+                        print(date_of_week)
+                dates_of_week = dates_of_week[:7] if len(dates_of_week) > 7 else dates_of_week
+                print(dates_of_week)
 
             else:
                 send_email(subject='Page not found',

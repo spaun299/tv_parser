@@ -15,7 +15,6 @@ app.config.from_object(config)
 @app.route('/parse_url_channels')
 @allow_ip
 def parse_url_channels():
-    print(request.remote_addr)
     try:
         driver.parse_url_channels()
         return render_template('log.html', message='Successful')
