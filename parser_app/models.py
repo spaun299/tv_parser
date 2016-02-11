@@ -10,16 +10,29 @@ class SaveRecordsToDb(object):
         elements_count = 0
         self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
         for element in dict_of_elements.keys():
-            db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}' OR name='{name}' """.format(
+            db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}'
+                           OR name='{name}' """.format(
                 link=element, name=dict_of_elements[element]['name'].encode('utf-8')))
             if db.fetchone()[0] == 0:
                 db.execute(""" INSERT INTO channels(name, link, icon_id)
-                              VALUES ('{name}', '{link}', (SELECT id FROM files WHERE file_link='{file_link}')); """.
-                           format(name=dict_of_elements[element]['name'].encode('utf-8'), link=element,
-                                  file_link=dict_of_elements[element]['icon']))
+                              VALUES ('{name}', '{link}',
+                              (SELECT id FROM files WHERE file_link='{file_link}')); """.
+                           format(name=dict_of_elements[element]['name'].encode('utf-8'),
+                                  link=element, file_link=dict_of_elements[element]['icon']))
                 elements_count += 1
         sql_connection.commit()
         return elements_count
+
+    @staticmethod
+    def save_programs(channel_id, list_of_programs_dict):
+        db.executemany(""" INSERT INTO tv_programs(name, genre, show_date, show_time,
+                           channel_id) VALUES(%(name)s, %(genre)s, %(show_date)s, %(show_time)s,
+                            %(channel_id)s); """,
+                       [{'name': elem['name'], 'genre': elem['genre'],
+                         'show_date': elem['show_date'], 'show_time': elem['show_time'],
+                         'channel_id': channel_id} for elem in list_of_programs_dict])
+        sql_connection.commit()
+
 
     @staticmethod
     def insert_icons_into_files(list_of_links):
@@ -37,12 +50,12 @@ class SaveRecordsToDb(object):
         sql_connection.commit()
 
     def save(self, table_name):
-        items = {key: value for key, value in self.__dict__.items() if (key in getattr(self, 'db_fields')) and value}
+        items = {key: value for key, value in self.__dict__.items() if (
+            key in getattr(self, 'db_fields')) and value}
         fields_name = ",".join(items.keys())
         fields_value = "','".join(items.values())
-        db.execute(""" INSERT INTO %(table_name)s(%(keys)s) VALUES ('%(values)s');""" % {'table_name': table_name,
-                                                                                         'keys': fields_name,
-                                                                                         'values': fields_value})
+        db.execute(""" INSERT INTO %(table_name)s(%(keys)s) VALUES ('%(values)s');""" %
+                   {'table_name': table_name, 'keys': fields_name, 'values': fields_value})
         sql_connection.commit()
 
 
@@ -59,11 +72,13 @@ class GetRecordsFromDb:
 
     @staticmethod
     def get_channel(channel_id):
-        db.execute(""" SELECT * FROM channels WHERE id='{channel_id}'; """.format(channel_id=channel_id))
+        db.execute(""" SELECT * FROM channels WHERE id='{channel_id}'; """.format(
+            channel_id=channel_id))
         return db.fetchone()
 
     def check_channel_exists(self):
-        db.execute(""" SELECT COUNT(id) FROM channels WHERE name='{name}';""".format(name=self.name))
+        db.execute(""" SELECT COUNT(id) FROM channels WHERE name='{name}';""".format(
+            name=self.name))
         return db.fetchone()[0]
 
 
@@ -74,8 +89,8 @@ class Channel(SaveRecordsToDb):
     description = dict(length=1000)
     web_site = dict(length=200)
 
-    def __init__(self, channel_id=None, name=None, link=None, icon_id=None, language=None, description=None,
-                 web_site=None):
+    def __init__(self, channel_id=None, name=None, link=None, icon_id=None, language=None,
+                 description=None, web_site=None):
         super(Channel, self).__init__()
         self.channel_id = channel_id
         self.name = name
@@ -106,4 +121,14 @@ class Channel(SaveRecordsToDb):
 
 
 class TvProgram(SaveRecordsToDb):
-    pass
+    name = dict(length=200)
+    genre = dict(length=50)
+
+    def __init__(self, name=None, genre=None, show_date=None, show_time=None, channel_id=None):
+        super(TvProgram, self).__init__()
+        self.name = name
+        self.genre = genre
+        self.show_date = show_date
+        self.show_time = show_time
+        self.channel_id = channel_id
+        self.db_fields = ['name', 'genre', 'show_date', 'show_time', 'channel_id']
