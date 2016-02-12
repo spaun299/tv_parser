@@ -1,6 +1,7 @@
 # -*- coding: ascii -*-
 from db_init import db, sql_connection
-
+import time
+import datetime
 
 class SaveRecordsToDb(object):
     def __init__(self):
@@ -24,13 +25,13 @@ class SaveRecordsToDb(object):
         return elements_count
 
     @staticmethod
-    def save_programs(channel_id, list_of_programs_dict):
+    def save_programs(channel_id, list_of_programs_classes):
         db.executemany(""" INSERT INTO tv_programs(name, genre, show_date, show_time,
                            channel_id) VALUES(%(name)s, %(genre)s, %(show_date)s, %(show_time)s,
                             %(channel_id)s); """,
-                       [{'name': elem['name'], 'genre': elem['genre'],
-                         'show_date': elem['show_date'], 'show_time': elem['show_time'],
-                         'channel_id': channel_id} for elem in list_of_programs_dict])
+                       [{'name': cls.name, 'genre': cls.genre,
+                         'show_date': cls.show_date, 'show_time': cls.show_time,
+                         'channel_id': channel_id} for cls in list_of_programs_classes])
         sql_connection.commit()
 
 

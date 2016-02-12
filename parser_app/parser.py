@@ -127,15 +127,13 @@ class SeleniumWebDriver(object):
                     for channel in channels_tags:
                         program_name = channel.find_element_by_class_name(
                             'tv-event__title-inner').text
-                        show_time = time.strptime(
-                            channel.find_element_by_class_name('tv-event__time-text').text + ':00',
-                            '%H:%M:%S')
+                        show_time = channel.find_element_by_class_name('tv-event__time-text').text + ':00'
                         show_date = datetime.datetime.strptime(day, '%Y-%m-%d')
                         # genre = re.findall(ur'genre\W+(\w+)', channel.get_attribute('data-bem'))
                         genre = json.loads(channel.get_attribute('data-bem'))['tv-event']['genre']
                         tv_channels.append(TvProgram(name=program_name, genre=genre,
-                                                     channel_id=id_and_link['id'],
                                                      show_date=show_date, show_time=show_time))
+                    SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
 
             else:
                 send_email(subject='Page not found',
