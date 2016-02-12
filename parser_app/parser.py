@@ -61,13 +61,10 @@ class SeleniumWebDriver(object):
         page_height = 0
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
-        count = 0
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(5)
-            count += 1
-        print(count)
         for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
             name = a.find_element_by_css_selector('span.tv-channel-title__text').text
             href = a.get_attribute('href').encode('ascii', 'ignore')
