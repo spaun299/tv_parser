@@ -62,19 +62,20 @@ class SeleniumWebDriver(object):
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
         count = 0
-        while (page_height != self.driver.execute_script(scroll_height_script)) and count != 1:
+        while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
-                name = a.find_element_by_css_selector('span.tv-channel-title__text').text
-                href = a.get_attribute('href').encode('ascii', 'ignore')
-                icon = self.get_background_image(a.find_element_by_css_selector(
+            time.sleep(5)
+            count += 1
+        print(count)
+        for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
+            name = a.find_element_by_css_selector('span.tv-channel-title__text').text
+            href = a.get_attribute('href').encode('ascii', 'ignore')
+            icon = self.get_background_image(a.find_element_by_css_selector(
                     'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')).\
                     encode('ascii', 'ignore')
-                if (href is not None) and (href not in elements.keys()):
-                    elements[href] = {'name': name, 'icon': icon}
-            time.sleep(1)
-            count = 1
+            if (href is not None) and (href not in elements.keys()):
+                elements[href] = {'name': name, 'icon': icon}
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
         return 'Parser notification', \
@@ -89,16 +90,16 @@ class SeleniumWebDriver(object):
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
             self.driver.get(id_and_link['link'])
-            time.sleep(2)
+            time.sleep(5)
             if '404' not in self.driver.title:
                 if not channel.description or not channel.web_site:
                     channel_description = self.driver.find_elements_by_css_selector(
-                                         "tr.b-row div.b-tv-channel-content__text")
+                        "tr.b-row div.b-tv-channel-content__text")
                     channel_description = channel_description[0].text if channel_description else \
                         "This channel does not have description"
                     channel_web_site = self.driver.find_elements_by_css_selector(
-                                         "div.b-tv-channel-content__channel-info > "
-                                         "div.b-tv-channel-content__links > a")
+                        "div.b-tv-channel-content__channel-info > "
+                        "div.b-tv-channel-content__links > a")
                     channel_web_site = channel_web_site[0].get_attribute('href') \
                         if channel_web_site else "This channel does not have web site"
                     if len(channel_description) > Channel.description['length']:
