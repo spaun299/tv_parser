@@ -16,6 +16,7 @@
 <br />if file '.openshift/action_hooks/post_deploy' does't exists you should create this one within:
 <br />\#!/bin/bash
 <br />nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
+<br />nohup python ${OPENSHIFT_REPO_DIR}/run_scheduler.py
 >*    3:)install necessary libraries:
 <br />source venv/bin/activate
 <br />pip instal -r requirements.txt
