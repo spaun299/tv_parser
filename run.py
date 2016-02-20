@@ -1,8 +1,8 @@
 from parser_app.parser import SeleniumWebDriver
 from flask import Flask, render_template
 from utils.send_email import SendEmail
+from utils.messages import message_for_email
 import config
-from flask import request
 from utils.decorators import allow_ip
 
 
@@ -17,10 +17,13 @@ app.config.from_object(config)
 def parse_url_channels():
     try:
         driver.parse_url_channels()
-        return render_template('log.html', message='Successful')
+        successfull = True
     except Exception as e:
-        send_email(exception=e)
-        return render_template('log.html', message='Error, see email')
+        send_email(exception=e, use_smtp=False)
+        successfull = False
+    finally:
+        template, msg = message_for_email(successfull=successfull)
+        return render_template(template, **msg)
 
 
 @app.route('/parse_programs')
@@ -28,10 +31,13 @@ def parse_url_channels():
 def parse_programs():
     try:
         driver.parse_tv_programs()
-        return render_template('log.html', message='Successful')
+        successfull = True
     except Exception as e:
-        send_email(exception=e)
-        return render_template('log.html', message='Error, see email')
+        send_email(exception=e, use_smtp=False)
+        successfull = False
+    finally:
+        template, msg = message_for_email(successfull=successfull)
+        return render_template(template, **msg)
 
 if __name__ == '__main__':
     app.run()

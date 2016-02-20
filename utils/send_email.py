@@ -13,7 +13,8 @@ class SendEmail:
         self.send_to = send_to or [config.MAIL_USERNAME]
         self.send_email()
 
-    def send_email(self, subject='Parse Error', text='Parse Error', exception=None):
+    def send_email(self, subject='Parse Error', text='Parse Error', exception=None,
+                   use_smtp=True):
         if exception:
             _, _, tb = sys.exc_info()
             traceback.print_tb(tb)
@@ -27,9 +28,11 @@ class SendEmail:
         msg['Subject'] = subject
         msg['From'] = self.username
         msg['To'] = ','.join(self.send_to)
-        server = smtplib.SMTP('smtp.gmail.com:587')
-
-        server.starttls()
-        server.login(self.username, self.password)
+        if use_smtp:
+            server = smtplib.SMTP('smtp.gmail.com:587')
+            server.starttls()
+            server.login(self.username, self.password)
+        else:
+            server = smtplib.SMTP('localhost')
         server.sendmail(self.username, self.send_to, msg.as_string())
         server.quit()
