@@ -20,7 +20,7 @@ send_email = SendEmail().send_email
 
 
 def run_scheduler():
-    schedule.every(1).seconds.do(driver.parse_url_channels)
+    schedule.every(1).hours.do(driver.parse_url_channels)
     # scheduler = BackgroundScheduler()
     # scheduler.add_job(driver.parse_url_channels, trigger='cron', id=str(time.time()),
     #                   args=('*/1 * * * *',))
