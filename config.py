@@ -16,7 +16,6 @@ def database_url():
     db_url = "host='{host}' dbname='{db_name}' port='{port}' user='{user}' password='{password}'".format(
         host=host, db_name=db_name, user=user, password=password, port=port
     )
-
     return db_url
 
 POSTGRES_DATABASE_URI = database_url()
