@@ -67,7 +67,6 @@ class SeleniumWebDriver(object):
         print('page height', str(count))
         for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
             name = a.find_element_by_css_selector('span.tv-channel-title__text').text
-            print(name)
             href = a.get_attribute('href').encode('ascii', 'ignore')
             icon = self.get_background_image(a.find_element_by_css_selector(
                     'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')).\
@@ -75,7 +74,6 @@ class SeleniumWebDriver(object):
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}
             count1 += 1
-            
         print('elements', str(count1))
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
