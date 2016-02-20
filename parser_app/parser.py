@@ -56,16 +56,14 @@ class SeleniumWebDriver(object):
 
         page_height = 0
         elements = {}
-        count = 0
-        count1 = 0
         scroll_height_script = """ return window.innerHeight + window.scrollY """
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(5)
-            count += 1
-        print('page height', str(count))
-        for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
+            time.sleep(2)
+        channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
+        for a in channels:
+            time.sleep(2)
             name = a.find_element_by_css_selector('span.tv-channel-title__text').text
             href = a.get_attribute('href').encode('ascii', 'ignore')
             icon = self.get_background_image(a.find_element_by_css_selector(
@@ -73,13 +71,12 @@ class SeleniumWebDriver(object):
                     encode('ascii', 'ignore')
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}
-            count1 += 1
-        print('elements', str(count1))
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
         send_email(subject='Parser notification',
                    text='Url channels parsed successfully.{elements_count} new channels'.format(
                        elements_count=elements_count))
+        self.driver.close()
 
     def parse_tv_programs(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
@@ -139,3 +136,4 @@ class SeleniumWebDriver(object):
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
+        self.driver.close()
