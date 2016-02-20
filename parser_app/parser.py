@@ -8,11 +8,9 @@ import os
 import datetime
 from utils.date_and_time import get_date_time
 import re
-from db_init import db, sql_connection
 import json
 from utils.send_email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel, TvProgram
-from utils.decorators import send_email_decorator
 send_email = SendEmail().send_email
 
 
@@ -55,7 +53,6 @@ class SeleniumWebDriver(object):
         driver = webdriver.PhantomJS(**conf)
         return driver
 
-    @send_email_decorator
     def parse_url_channels(self):
 
         page_height = 0
@@ -64,6 +61,7 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            a = 100/0
             time.sleep(5)
         for a in self.driver.find_elements_by_css_selector(self.get_channel_css_selector()):
             name = a.find_element_by_css_selector('span.tv-channel-title__text').text
@@ -75,11 +73,10 @@ class SeleniumWebDriver(object):
                 elements[href] = {'name': name, 'icon': icon}
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
-        return 'Parser notification', \
-               'Url channels parsed successfully.{elements_count} new channels'.format(
-                   elements_count=elements_count)
+        send_email(subject='Parser notification',
+                   text='Url channels parsed successfully.{elements_count} new channels'.format(
+                       elements_count=elements_count))
 
-    @send_email_decorator
     def parse_tv_programs(self):
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         date_today = get_date_time()
@@ -132,8 +129,9 @@ class SeleniumWebDriver(object):
                         tv_channels.append(TvProgram(name=program_name, genre=genre,
                                                      show_date=show_date, show_time=show_time))
                     SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
+                    send_email(subject='Parser notification',
+                               text='Tv programs parsed successfully.')
 
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
-        return 'Parser notification', 'Tv programs parsed successfully.'

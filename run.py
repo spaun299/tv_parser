@@ -15,13 +15,14 @@ app.config.from_object(config)
 @app.route('/parse_url_channels')
 @allow_ip
 def parse_url_channels():
+    successfull = True
     try:
         driver.parse_url_channels()
-        successfull = True
     except Exception as e:
-        send_email(exception=e, use_smtp=False)
         successfull = False
+        send_email(exception=e)
     finally:
+        print(successfull)
         template, msg = message_for_email(successfull=successfull)
         return render_template(template, **msg)
 
@@ -29,13 +30,14 @@ def parse_url_channels():
 @app.route('/parse_programs')
 @allow_ip
 def parse_programs():
+    successfull = True
     try:
         driver.parse_tv_programs()
-        successfull = True
     except Exception as e:
-        send_email(exception=e, use_smtp=False)
         successfull = False
+        send_email(exception=e)
     finally:
+        print(successfull)
         template, msg = message_for_email(successfull=successfull)
         return render_template(template, **msg)
 
