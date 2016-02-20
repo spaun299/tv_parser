@@ -75,6 +75,7 @@ class SeleniumWebDriver(object):
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}
             count1 += 1
+            
         print('elements', str(count1))
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
