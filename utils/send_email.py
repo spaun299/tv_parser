@@ -26,7 +26,7 @@ class SendEmail:
             text = message
         msg = MIMEText(text)
         msg['Subject'] = subject
-        msg['From'] = self.username
+        msg['From'] = 'tvparser <tvparser.in.ua@gmail.com>'
         msg['To'] = ','.join(self.send_to)
         if use_smtp:
             server = smtplib.SMTP('smtp.gmail.com:587')
