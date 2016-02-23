@@ -1,7 +1,5 @@
-from parser_app.parser import SeleniumWebDriver
-from flask import Flask, render_template
-from utils.send_email import SendEmail
-from utils.messages import message_for_email
+from flask import Flask, render_template, abort
+from db_init import db
 import config
 from utils.decorators import allow_ip
 
@@ -10,10 +8,17 @@ app = Flask(__name__)
 app.config.from_object(config)
 
 
+@app.route('/')
+@allow_ip
+def index():
+    return abort(404)
+
+
 @app.route('/log')
 @allow_ip
 def log():
-    return render_template('log.html', mesage='log')
+    db.execute(""" SELECT channels.name, channels.cr_tm FROM channels; """)
+    return render_template('log.html', db_elements=db.fetchall())
 
 
 # def parse_url_channels():

@@ -3,13 +3,15 @@ from db_init import db, sql_connection
 import time
 import datetime
 
+
 class SaveRecordsToDb(object):
     def __init__(self):
         pass
 
     def save_channels_to_db(self, dict_of_elements):
         elements_count = 0
-        self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()])
+        self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()
+                                      if link['icon']])
         for element in dict_of_elements.keys():
             db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}'
                            OR name='{name}' """.format(
@@ -33,7 +35,6 @@ class SaveRecordsToDb(object):
                          'show_date': cls.show_date, 'show_time': cls.show_time,
                          'channel_id': channel_id} for cls in list_of_programs_classes])
         sql_connection.commit()
-
 
     @staticmethod
     def insert_icons_into_files(list_of_links):

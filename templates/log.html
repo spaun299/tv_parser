@@ -6,7 +6,10 @@
 </head>
 <body>
 <h2>
-{{ message }}
+{% for elem in db_elements %}
+    {{ elem|safe }}
+    <br>
+    {% endfor %}
 </h2>
 </body>
 </html>

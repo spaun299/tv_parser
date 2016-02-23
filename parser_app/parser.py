@@ -60,15 +60,17 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
+            time.sleep(1)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
+        print(len(channels))
         for a in channels:
-            time.sleep(2)
+            time.sleep(0.5)
             name = a.find_element_by_css_selector('span.tv-channel-title__text').text
             href = a.get_attribute('href').encode('ascii', 'ignore')
-            icon = self.get_background_image(a.find_element_by_css_selector(
-                    'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')).\
-                    encode('ascii', 'ignore')
+            icon = a.find_elements_by_css_selector(
+                'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')
+            if icon:
+                icon = self.get_background_image(icon[0]).encode('ascii', 'ignore')
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}
         save_records = SaveRecordsToDb()
