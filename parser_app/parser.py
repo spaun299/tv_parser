@@ -53,7 +53,7 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
-
+        func_tm = datetime.datetime.now()
         page_height = 0
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
@@ -67,7 +67,6 @@ class SeleniumWebDriver(object):
             name = channel.find_element_by_css_selector(
                 'span.tv-channel-title__text').text.encode('utf-8')
             href = channel.get_attribute('href').encode('utf-8')
-                # .encode('ascii', 'ignore')
             icon = channel.find_elements_by_css_selector(
                 'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')
             if icon:
@@ -77,11 +76,13 @@ class SeleniumWebDriver(object):
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
         send_email(subject='Parser notification',
-                   text='Url channels parsed successfully.{elements_count} new channels'.format(
-                       elements_count=elements_count))
+                   text='Url channels parsed successfully.{elements_count} new channels.'
+                        'Execution time: {func_tm}'.
+                   format(elements_count=elements_count, func_tm=datetime.datetime.now()-func_tm))
         self.driver.close()
 
     def parse_tv_programs(self):
+        func_tm = datetime.datetime.now()
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         date_today = get_date_time()
         for id_and_link in ids_and_links:
@@ -132,10 +133,11 @@ class SeleniumWebDriver(object):
                         tv_channels.append(TvProgram(name=program_name, genre=genre,
                                                      show_date=show_date, show_time=show_time))
                     SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
-                    send_email(subject='Parser notification',
-                               text='Tv programs parsed successfully.')
-
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
+        func_tm = datetime.datetime.now() - func_tm
+        send_email(subject='Parser notification',
+                   text='Tv programs parsed successfully.'
+                        'Execution time: %s' % func_tm)
         self.driver.close()

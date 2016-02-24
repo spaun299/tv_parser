@@ -3,6 +3,7 @@ import smtplib
 import sys
 import traceback
 from email.mime.text import MIMEText
+import os
 
 
 class SendEmail:
@@ -11,7 +12,6 @@ class SendEmail:
         self.username = username
         self.password = password
         self.send_to = send_to or [config.MAIL_USERNAME]
-        self.send_email()
 
     def send_email(self, subject='Parse Error', text='Parse Error', exception=None,
                    use_smtp=True):
@@ -24,6 +24,9 @@ class SendEmail:
                 line=line_, assert_message=exception.args, file=filename_)
             print(message)
             text = message
+        text += '. Server {server_name}'.format(
+            server_name='OPENSHIFT' if os.environ.get('OPENSHIFT_DATA_DIR')
+            else 'localhost')
         msg = MIMEText(text)
         msg['Subject'] = subject
         msg['From'] = 'tvparser <tvparser.in.ua@gmail.com>'
