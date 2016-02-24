@@ -66,15 +66,12 @@ class SeleniumWebDriver(object):
         for channel in channels:
             time.sleep(0.5)
             name = channel.find_element_by_css_selector('span.tv-channel-title__text').text.encode('utf-8')
-            print(name)
             href = channel.get_attribute('href').encode('utf-8')
                 # .encode('ascii', 'ignore')
-            print(href)
             icon = channel.find_elements_by_css_selector(
                 'div.tv-channel-title__icon > span[class$="image_type_channel"] > span')
             if icon:
                 icon = self.get_background_image(icon[0]).encode('utf-8')
-                print(icon)
                     # .encode('ascii', 'ignore')
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}

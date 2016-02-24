@@ -83,6 +83,17 @@ class GetRecordsFromDb:
             name=self.name))
         return db.fetchone()[0]
 
+    @staticmethod
+    def get_full_channels_info():
+        db.execute(""" SELECT c.name, c.cr_tm, c.link, c.web_site, c.description, f.file_link as icon_link
+                      FROM channels c LEFT JOIN files f ON c.icon_id=f.id; """)
+        db_elements = []
+        for elem in db.fetchall():
+            db_elements.append({'name': elem['name'].decode('utf-8'), 'cr_tm': elem['cr_tm'],
+                                'link': elem['link'], 'web_site': elem['web_site'], 'description': elem['description'],
+                                'icon_link': elem['icon_link']})
+        return db_elements
+
 
 class Channel(SaveRecordsToDb):
     name = dict(length=200)
