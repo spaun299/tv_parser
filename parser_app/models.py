@@ -15,12 +15,12 @@ class SaveRecordsToDb(object):
         for element in dict_of_elements.keys():
             db.execute(""" SELECT COUNT(id) FROM channels WHERE link='{link}'
                            OR name='{name}' """.format(
-                link=element, name=dict_of_elements[element]['name'].encode('utf-8')))
+                link=element, name=dict_of_elements[element]['name']))
             if db.fetchone()[0] == 0:
                 db.execute(""" INSERT INTO channels(name, link, icon_id)
                               VALUES ('{name}', '{link}',
                               (SELECT id FROM files WHERE file_link='{file_link}')); """.
-                           format(name=dict_of_elements[element]['name'].encode('utf-8'),
+                           format(name=dict_of_elements[element]['name'],
                                   link=element, file_link=dict_of_elements[element]['icon']))
                 elements_count += 1
         sql_connection.commit()
