@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <style>
     .wrapper span{
-        padding-left: 350px;
-        position: relative;
+        width: 270px;
+        display:inline-table;
+        
+    }
+    .wrapper .wrapper-top span{
+        width: 310px;
+        display:inline-table;
+
     }
 </style>
 <html lang="en">
@@ -10,21 +16,26 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body><h2>
-<span class="channel_name">Channel name</span>
+<body>
 <div class="wrapper">
-<span class="channel_time">Creation date</span>
-    <span class="channel_link">Link</span>
-    <span class="channel_web_site">Web site</span>
-    <span class="channel_logo">Logo</span>
-    <span class="channel_description">Description</span><br>
-{% for elem in db_elements %}
-    <img src="{{ elem['icon_link'] }}">
-    <span class="channel_name">{{ elem['name'] }}</span>
-    <span class="channel_time">{{ elem['cr_tm']|safe }}</span>
+    <div class="wrapper-top">
+        <span class="channel_name">Channel name</span>
+        <span class="channel_time">Creation date</span>
+        <span class="channel_link">Link</span>
+        <span class="channel_web_site">Web site</span>
+        <span class="channel_logo">Logo</span>
+        <span class="channel_description">Description</span>
+    </div>
     <br>
+
+    {% for elem in db_elements %}
+        <img src="{{ elem['icon_link'] }}" style="margin-bottom: -5px">
+        <span class="channel_name">{{ elem['name'] }}</span>
+        <span class="channel_time">{{ elem['cr_tm']|safe }}</span>
+        <span class="channel_time">{{ elem['link']|safe }}</span>
+        <span class="channel_time">{{ elem['web_site']|safe }}</span>
+        <br>
     {% endfor %}
-</h2>
-</div>
+    </div>
 </body>
 </html>

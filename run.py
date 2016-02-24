@@ -17,7 +17,6 @@ def index():
 @app.route('/log')
 @allow_ip
 def log():
-    db.execute(""" SELECT c.name, c.cr_tm, c.link, c.web_site, c.description, f.file_link as icon_link FROM channels c LEFT JOIN files f ON c.icon_id=f.id; """)
     db_elements = GetRecordsFromDb.get_full_channels_info()
     return render_template('log.html', db_elements=db_elements)
 
