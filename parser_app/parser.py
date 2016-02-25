@@ -53,6 +53,8 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
+        time.sleep(200)
+        send_email(subject='200 late')
         func_tm = datetime.datetime.now()
         page_height = 0
         elements = {}
