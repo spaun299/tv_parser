@@ -11,6 +11,7 @@ send_email = SendEmail().send_email
 def run_scheduler():
     try:
         # driver.parse_url_channels()
+        send_email(subject='Start Parse')
         driver.parse_tv_programs()
         schedule.every(1).monday.at('"06:00"').do(driver.parse_tv_programs)
         schedule.every(20).days.do(driver.parse_url_channels)
