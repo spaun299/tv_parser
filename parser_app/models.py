@@ -47,6 +47,10 @@ class SaveRecordsToDb(object):
 
     @staticmethod
     def update_table(table_name, item_id, key, value):
+        print(table_name)
+        print(item_id)
+        print(key)
+        print(value)
         db.execute(""" UPDATE %(table_name)s SET %(key)s='%(value)s' WHERE id=%(item_id)s;""" %
                    {'table_name': table_name, 'key': key, 'value': value, 'item_id': item_id})
         sql_connection.commit()
