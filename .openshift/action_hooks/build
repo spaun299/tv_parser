@@ -1,4 +1,3 @@
 #!/bin/bash
 nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
 nohup python ${OPENSHIFT_REPO_DIR}run_scheduler.py &
-
