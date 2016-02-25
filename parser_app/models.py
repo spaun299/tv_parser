@@ -90,7 +90,8 @@ class GetRecordsFromDb:
         db_elements = []
         for elem in db.fetchall():
             db_elements.append({'name': elem['name'].decode('utf-8'), 'cr_tm': elem['cr_tm'],
-                                'link': elem['link'], 'web_site': elem['web_site'], 'description': elem['description'],
+                                'link': elem['link'], 'web_site': elem['web_site'],
+                                'description': elem['description'].decode('utf-8') if elem['description'] else None,
                                 'icon_link': elem['icon_link']})
         return db_elements
 
