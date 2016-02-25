@@ -1,4 +1,10 @@
 #!/bin/bash
-nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005
+phantom=$(ps -eaf | grep -v grep | grep phantomjs | grep -v $$)
+if [ "$phantom" ]; then
+echo "Phantomjs already running";
+else nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005; fi
+scheduler_pid=$(ps -eaf | grep -v grep | grep run_scheduler.py | grep -v $$ | awk '{ print $2 }')
+if [ "$scheduler_pid" ]; then
+kill -SIGKILL $scheduler_pid; fi
 chmod +x $OPENSHIFT_REPO_DIR/run_scheduler.py
 nohup python $OPENSHIFT_REPO_DIR/run_scheduler.py
