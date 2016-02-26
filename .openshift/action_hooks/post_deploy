@@ -7,6 +7,8 @@ else nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_
 scheduler_pid=$(ps -eaf | grep -v grep | grep run_scheduler.py | grep -v $$ | awk '{ print $2 }')
 if [ "$scheduler_pid" ]; then
 kill -SIGKILL $scheduler_pid
+echo "Scheduler was killed"
  fi
 chmod +x $OPENSHIFT_REPO_DIR/run_scheduler.py
 nohup python $OPENSHIFT_REPO_DIR/run_scheduler.py &
+echo "Scheduler started successfully"

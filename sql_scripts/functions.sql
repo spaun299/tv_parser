@@ -5,3 +5,13 @@ BEGIN
     RETURN NEW;
 END;
 $$ language 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION count_objects_for_log(text)
+  RETURNS int AS $$
+    DECLARE total INT;
+  BEGIN
+      EXECUTE 'SELECT  INTO total COUNT(' || quote_ident($1) || ') FROM '  || quote_ident($1) || ';';
+  RETURN total;
+END;
+$$ language 'plpgsql';
