@@ -22,6 +22,7 @@ class SeleniumWebDriver(object):
         self.driver = None
 
     def driver_start(self):
+        print self.url
         self.driver = self.get_phantomjs_driver()
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)
