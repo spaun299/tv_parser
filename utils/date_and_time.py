@@ -2,12 +2,12 @@ from pytz import timezone, country_timezones, utc
 import datetime
 
 
-def get_date_and_time_with_timezone(country='UA', date=True, time=False):
+def get_date_and_time_with_timezone(country='UA', show_date=True, show_time=False):
     country = timezone(country_timezones[country][0])
     date_time_str = ''
-    if date:
+    if show_date:
         date_time_str += '%Y-%m-%d'
-    if time:
+    if show_time:
         date_time_str += ' %H:%M:%S'
     date = utc.localize(datetime.datetime.utcnow(), is_dst=None).astimezone(
         country).strftime(date_time_str)

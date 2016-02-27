@@ -6,7 +6,7 @@ import traceback
 
 def write_to_log(message=None, error=None):
     if os.environ.get('OPENSHIFT_PYTHON_LOG_DIR'):
-        date_time = get_date_and_time_with_timezone(time=True)
+        date_time = get_date_and_time_with_timezone(show_time=True)
         file = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'a')
         text = '[%s] :   ' % date_time
         if error:

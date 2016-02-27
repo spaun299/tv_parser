@@ -11,6 +11,7 @@ import re
 import json
 from utils.send_email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel, TvProgram
+from utils.date_and_time import hours_minutes_seconds_from_seconds
 send_email = SendEmail().send_email
 
 
@@ -79,7 +80,8 @@ class SeleniumWebDriver(object):
         func_tm = int(time.time()-func_tm)
         text_for_log = 'Channels parsed successfully.{elements_count} new channels.' \
                        'Execution time: {func_tm}'.\
-            format(elements_count=elements_count, func_tm=func_tm)
+            format(elements_count=elements_count,
+                   func_tm=hours_minutes_seconds_from_seconds(func_tm))
         send_email(subject='Parser notification',
                    text=text_for_log)
         write_to_log(text_for_log)
@@ -144,7 +146,8 @@ class SeleniumWebDriver(object):
                             count_programs += 1
                         SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
                 else:
-                    write_to_log('Error. Page {page} not found'.format(page=self.driver.current_url))
+                    write_to_log('Error. Page {page} not found'.format(
+                        page=self.driver.current_url))
                     send_email(subject='Page not found',
                                text='Page {page} not found'.format(page=self.driver.current_url))
             else:
@@ -153,7 +156,7 @@ class SeleniumWebDriver(object):
                              (id_and_link.get('link'), id_and_link.get('id')))
         func_tm = time.time() - func_tm
         text_for_log = 'Tv programs parsed successfully.' \
-                       'Execution time: %s' % func_tm
+                       'Execution time: %s' % hours_minutes_seconds_from_seconds(func_tm)
         send_email(subject='Parser notification',
                    text=text_for_log)
         write_to_log(text_for_log)
