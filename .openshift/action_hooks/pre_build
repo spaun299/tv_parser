@@ -1,0 +1,12 @@
+#!/bin/bash
+log_dir=$OPENSHIFT_PYTHON_LOG_DIR
+repo_dir=$OPENSHIFT_REPO_DIR
+data_dir=$OPENSHIFT_DATA_DIR
+rm $log_dir/python_log.log $log_dir/nohup_for_scheduler.out
+touch $log_dir/python_log.log $log_dir/nohup_for_scheduler.out
+chmod +wx $log_dir/python_log.log $log_dir_PYTHON_LOG_DIR/nohup_for_scheduler.out
+scheduler_pid=$(ps -eaf | grep -v grep | grep run_scheduler.py | grep -v $$ | awk '{ print $2 }')
+if [ "$scheduler_pid" ]; then
+kill -SIGKILL $scheduler_pid
+echo Scheduler with PID: $scheduler_pid was killed
+ fi

@@ -18,11 +18,15 @@ send_email = SendEmail().send_email
 class SeleniumWebDriver(object):
 
     def __init__(self, url=config.MAIN_PARSE_URL):
-        self.driver = self.get_phantomjs_driver()
         self.url = url
+        self.driver = None
+
+    def driver_start(self):
+        self.driver = self.get_phantomjs_driver()
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)
-        assert url in self.driver.current_url, "Can't open url: %s" % url
+        assert self.url in self.driver.current_url, "Can't open url: %s" % self.url
+
 
     @staticmethod
     def get_channel_xpath():
@@ -54,6 +58,7 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
+        self.driver_start()
         write_to_log('Start channels parsing')
         func_tm = time.time()
         page_height = 0
@@ -65,7 +70,7 @@ class SeleniumWebDriver(object):
             time.sleep(4)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
-            time.sleep(4)
+            time.sleep(1)
             name = channel.find_element_by_css_selector(
                 'span.tv-channel-title__text').text.encode('utf-8')
             href = channel.get_attribute('href').encode('utf-8')
@@ -89,6 +94,7 @@ class SeleniumWebDriver(object):
         self.driver.close()
 
     def parse_tv_programs(self):
+        self.driver_start()
         write_to_log('Start programs parsing')
         func_tm = time.time()
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
@@ -99,7 +105,7 @@ class SeleniumWebDriver(object):
             channel.update()
             if id_and_link.get('link'):
                 self.driver.get(id_and_link.get('link'))
-                time.sleep(5)
+                time.sleep(4)
                 if '404' not in self.driver.title:
                     if not channel.description or not channel.web_site:
                         channel_description = self.driver.find_elements_by_css_selector(
@@ -109,13 +115,16 @@ class SeleniumWebDriver(object):
                         channel_web_site = self.driver.find_elements_by_css_selector(
                             "div.b-tv-channel-content__channel-info > "
                             "div.b-tv-channel-content__links > a")
-                        channel_web_site = channel_web_site[0].get_attribute('href').encode('utf-8') \
+                        channel_web_site = channel_web_site[0].get_attribute(
+                            'href').encode('utf-8') \
                             if channel_web_site else "This channel does not have web site"
                         if len(channel_description) > Channel.description['length']:
-                            channel_description = channel_description[:Channel.description['length']]
+                            channel_description = channel_description[:Channel.description[
+                                'length']]
                         if len(channel_web_site) > Channel.web_site['length']:
                             channel_web_site = channel_web_site[:Channel.web_site['length']]
-                        channel.description, channel.web_site = channel_description, channel_web_site
+                        channel.description, channel.web_site = \
+                            channel_description, channel_web_site
                         channel.update()
                     dates_of_week = list()
                     for date in self.driver.find_elements_by_css_selector(
@@ -138,9 +147,11 @@ class SeleniumWebDriver(object):
                         for channel in channels_tags:
                             program_name = channel.find_element_by_class_name(
                                 'tv-event__title-inner').text
-                            show_time = channel.find_element_by_class_name('tv-event__time-text').text + ':00'
+                            show_time = channel.find_element_by_class_name(
+                                'tv-event__time-text').text + ':00'
                             show_date = datetime.datetime.strptime(day, '%Y-%m-%d')
-                            genre = json.loads(channel.get_attribute('data-bem'))['tv-event']['genre']
+                            genre = json.loads(channel.get_attribute(
+                                'data-bem'))['tv-event']['genre']
                             tv_channels.append(TvProgram(name=program_name, genre=genre,
                                                          show_date=show_date, show_time=show_time))
                             count_programs += 1
