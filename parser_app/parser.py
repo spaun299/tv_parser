@@ -95,56 +95,61 @@ class SeleniumWebDriver(object):
         for id_and_link in ids_and_links:
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
-            self.driver.get(id_and_link['link'])
-            time.sleep(5)
-            if '404' not in self.driver.title:
-                if not channel.description or not channel.web_site:
-                    channel_description = self.driver.find_elements_by_css_selector(
-                        "tr.b-row div.b-tv-channel-content__text")
-                    channel_description = channel_description[0].text.encode('utf-8')\
-                        if channel_description else "This channel does not have description"
-                    channel_web_site = self.driver.find_elements_by_css_selector(
-                        "div.b-tv-channel-content__channel-info > "
-                        "div.b-tv-channel-content__links > a")
-                    channel_web_site = channel_web_site[0].get_attribute('href').encode('utf-8') \
-                        if channel_web_site else "This channel does not have web site"
-                    if len(channel_description) > Channel.description['length']:
-                        channel_description = channel_description[:Channel.description['length']]
-                    if len(channel_web_site) > Channel.web_site['length']:
-                        channel_web_site = channel_web_site[:Channel.web_site['length']]
-                    channel.description, channel.web_site = channel_description, channel_web_site
-                    channel.update()
-                dates_of_week = list()
-                for date in self.driver.find_elements_by_css_selector(
-                        'div.tv-filter-days__viewport > div.tv-filter-days__items > '
-                        'div.tv-filter-days__item'):
-                    date_of_week = re.findall(r'(\d{4}-\d{2}-\d{2})T',
-                                              date.get_attribute('data-bem'))[0]
-                    if datetime.datetime.strptime(date_today, '%Y-%m-%d') <= \
-                            datetime.datetime.strptime(date_of_week, '%Y-%m-%d'):
-                        dates_of_week.append(date_of_week)
-                dates_of_week = dates_of_week[:7] if len(dates_of_week) > 7 else dates_of_week
-                for day in dates_of_week:
-                    self.driver.get("%(channel_link)s?date=%(date)s" %
-                                    {'channel_link': id_and_link['link'], 'date': day})
-                    time.sleep(1)
-                    channels_tags = self.driver.find_elements_by_css_selector(
-                        'div.b-tv-channel-schedule__items > div.b-tv-channel-schedule__item > a')
-                    tv_channels = []
-                    for channel in channels_tags:
-                        program_name = channel.find_element_by_class_name(
-                            'tv-event__title-inner').text
-                        show_time = channel.find_element_by_class_name('tv-event__time-text').text + ':00'
-                        show_date = datetime.datetime.strptime(day, '%Y-%m-%d')
-                        genre = json.loads(channel.get_attribute('data-bem'))['tv-event']['genre']
-                        tv_channels.append(TvProgram(name=program_name, genre=genre,
-                                                     show_date=show_date, show_time=show_time))
-                        count_programs += 1
-                    SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
+            if id_and_link.get('link'):
+                self.driver.get()
+                time.sleep(5)
+                if '404' not in self.driver.title:
+                    if not channel.description or not channel.web_site:
+                        channel_description = self.driver.find_elements_by_css_selector(
+                            "tr.b-row div.b-tv-channel-content__text")
+                        channel_description = channel_description[0].text.encode('utf-8')\
+                            if channel_description else "This channel does not have description"
+                        channel_web_site = self.driver.find_elements_by_css_selector(
+                            "div.b-tv-channel-content__channel-info > "
+                            "div.b-tv-channel-content__links > a")
+                        channel_web_site = channel_web_site[0].get_attribute('href').encode('utf-8') \
+                            if channel_web_site else "This channel does not have web site"
+                        if len(channel_description) > Channel.description['length']:
+                            channel_description = channel_description[:Channel.description['length']]
+                        if len(channel_web_site) > Channel.web_site['length']:
+                            channel_web_site = channel_web_site[:Channel.web_site['length']]
+                        channel.description, channel.web_site = channel_description, channel_web_site
+                        channel.update()
+                    dates_of_week = list()
+                    for date in self.driver.find_elements_by_css_selector(
+                            'div.tv-filter-days__viewport > div.tv-filter-days__items > '
+                            'div.tv-filter-days__item'):
+                        date_of_week = re.findall(r'(\d{4}-\d{2}-\d{2})T',
+                                                  date.get_attribute('data-bem'))[0]
+                        if datetime.datetime.strptime(date_today, '%Y-%m-%d') <= \
+                                datetime.datetime.strptime(date_of_week, '%Y-%m-%d'):
+                            dates_of_week.append(date_of_week)
+                    dates_of_week = dates_of_week[:7] if len(dates_of_week) > 7 else dates_of_week
+                    for day in dates_of_week:
+                        self.driver.get("%(channel_link)s?date=%(date)s" %
+                                        {'channel_link': id_and_link['link'], 'date': day})
+                        time.sleep(1)
+                        channels_tags = self.driver.find_elements_by_css_selector(
+                            'div.b-tv-channel-schedule__items > div.b-tv-channel-schedule__item > a')
+                        tv_channels = []
+                        for channel in channels_tags:
+                            program_name = channel.find_element_by_class_name(
+                                'tv-event__title-inner').text
+                            show_time = channel.find_element_by_class_name('tv-event__time-text').text + ':00'
+                            show_date = datetime.datetime.strptime(day, '%Y-%m-%d')
+                            genre = json.loads(channel.get_attribute('data-bem'))['tv-event']['genre']
+                            tv_channels.append(TvProgram(name=program_name, genre=genre,
+                                                         show_date=show_date, show_time=show_time))
+                            count_programs += 1
+                        SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
+                else:
+                    write_to_log('Error. Page {page} not found'.format(page=self.driver.current_url))
+                    send_email(subject='Page not found',
+                               text='Page {page} not found'.format(page=self.driver.current_url))
             else:
-                write_to_log('Error. Page {page} not found'.format(page=self.driver.current_url))
-                send_email(subject='Page not found',
-                           text='Page {page} not found'.format(page=self.driver.current_url))
+                id_and_link.get('link')
+                write_to_log('Wrong channel link %s. Channel id %s' %
+                             (id_and_link.get('link'), id_and_link.get('id')))
         func_tm = time.time() - func_tm
         text_for_log = 'Tv programs parsed successfully.' \
                        'Execution time: %s' % func_tm
