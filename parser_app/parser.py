@@ -53,9 +53,7 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
-        time.sleep(200)
-        send_email(subject='200 late')
-        func_tm = datetime.datetime.now()
+        func_tm = time.time()
         page_height = 0
         elements = {}
         scroll_height_script = """ return window.innerHeight + window.scrollY """
@@ -77,20 +75,22 @@ class SeleniumWebDriver(object):
                 elements[href] = {'name': name, 'icon': icon}
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
+        func_tm = int(time.time()-func_tm)
         send_email(subject='Parser notification',
                    text='Url channels parsed successfully.{elements_count} new channels.'
                         'Execution time: {func_tm}'.
-                   format(elements_count=elements_count, func_tm=datetime.datetime.now()-func_tm))
+                   format(elements_count=elements_count, func_tm=func_tm))
+        SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=elements_count)
         self.driver.close()
 
     def parse_tv_programs(self):
-        func_tm = datetime.datetime.now()
+        func_tm = time.time()
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
         date_today = get_date_time()
+        count_programs = 0
         for id_and_link in ids_and_links:
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
-            print(id_and_link['link'])
             self.driver.get(id_and_link['link'])
             time.sleep(5)
             if '404' not in self.driver.title:
@@ -135,12 +135,15 @@ class SeleniumWebDriver(object):
                         genre = json.loads(channel.get_attribute('data-bem'))['tv-event']['genre']
                         tv_channels.append(TvProgram(name=program_name, genre=genre,
                                                      show_date=show_date, show_time=show_time))
+                        count_programs += 1
                     SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
             else:
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
-        func_tm = datetime.datetime.now() - func_tm
+        func_tm = time.time() - func_tm
         send_email(subject='Parser notification',
                    text='Tv programs parsed successfully.'
                         'Execution time: %s' % func_tm)
+        SaveRecordsToDb.insert_log_info(parser_name='tv_programs', new_items=count_programs,
+                                        execution_time=func_tm)
         self.driver.close()

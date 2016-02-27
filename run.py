@@ -1,9 +1,7 @@
 from flask import Flask, render_template, abort
-from db_init import db
 import config
 from utils.decorators import allow_ip
 from parser_app.models import GetRecordsFromDb
-
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -18,8 +16,12 @@ def index():
 @app.route('/log')
 @allow_ip
 def log():
+    channels_log = GetRecordsFromDb.get_last_log_info('channels')
+    programs_log = GetRecordsFromDb.get_last_log_info('tv_programs')
     db_elements = GetRecordsFromDb.get_full_channels_info()
-    return render_template('log.html', db_elements=db_elements)
+    return render_template('log.html', db_elements=db_elements,
+                           channels_log=channels_log, programs_log=programs_log)
+
 
 if __name__ == '__main__':
     app.run()

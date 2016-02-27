@@ -1,7 +1,6 @@
 # -*- coding: ascii -*-
 from db_init import db, sql_connection
-import time
-import datetime
+from utils.date_and_time import hours_minutes_seconds_from_seconds
 
 
 class SaveRecordsToDb(object):
@@ -34,6 +33,17 @@ class SaveRecordsToDb(object):
                        [{'name': cls.name, 'genre': cls.genre,
                          'show_date': cls.show_date, 'show_time': cls.show_time,
                          'channel_id': channel_id} for cls in list_of_programs_classes])
+        sql_connection.commit()
+
+    @staticmethod
+    def insert_log_info(parser_name='channels', new_items=0, execution_time=0, success=True):
+        db.execute(""" INSERT INTO log(parser_name, count_new_items,
+                       execution_time, success)
+                       VALUES ('%(parser_name)s', '%(new_items)s', '%(execution_time)s',
+                       '%(success)s'); """ % dict(parser_name=parser_name,
+                                                  new_items=int(new_items),
+                                                  execution_time=int(execution_time),
+                                                  success=success))
         sql_connection.commit()
 
     @staticmethod
@@ -99,8 +109,27 @@ class GetRecordsFromDb:
                                 'icon_link': elem['icon_link']})
         return db_elements
 
+    @staticmethod
+    def get_last_log_info(parser_name):
+        result_dict = dict(log_name='Parser not started yet', new_items=0,
+                           total_channels=0, total_programs=0,
+                           log_cr_tm='Parser not started yet',
+                           log_status='Parser not started yet', execution_time=0)
+        db.execute(""" SELECT * FROM log WHERE parser_name='%(parser_name)s'
+                       ORDER BY cr_tm DESC; """ % {'parser_name': parser_name})
+        result = db.fetchone()
+        if not result:
+            return result_dict
+        return dict(log_name=result.get('parser_name'), new_items=result.get('count_new_items'),
+                    total_channels=result.get('total_channels'),
+                    total_programs=result.get('total_programs'), log_cr_tm=result.get('cr_tm'),
+                    log_status=result.get('success'),
+                    execution_time=hours_minutes_seconds_from_seconds(
+                        result.get('execution_time')))
+
 
 class Channel(SaveRecordsToDb):
+    table_name = 'channels'
     name = dict(length=200)
     link = dict(length=500)
     channel_language = dict(length=2)
@@ -139,6 +168,7 @@ class Channel(SaveRecordsToDb):
 
 
 class TvProgram(SaveRecordsToDb):
+    table_name = 'tv_programs'
     name = dict(length=200)
     genre = dict(length=50)
 
