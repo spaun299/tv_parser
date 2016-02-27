@@ -33,7 +33,10 @@
 <br />GRANT ALL privileges ON DATABASE yandex TO admin;
 >*    7:)CREATE ALL SEQUENCES AND TABLES:
 <br />cd sql_scripts
+<br />LOCALHOST:
 <br />sudo -u admin psql -d yandex -a -f SCRIPT_NAME
+<br />OPENSHIFT:
+<br />psql -d $PGDATABASE -a -f SCRIPT_NAME
 
 ###**Errors:**
 >*    If you have problem with smtp connection, you can try:
