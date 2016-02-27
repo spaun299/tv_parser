@@ -1,4 +1,4 @@
-from pytz import timezone, country_timezones
+from pytz import timezone, country_timezones, utc
 import datetime
 
 
@@ -9,7 +9,8 @@ def get_date_and_time_with_timezone(country='UA', date=True, time=False):
         date_time_str += '%Y-%m-%d'
     if time:
         date_time_str += ' %H:%M:%S'
-    date = country.localize(datetime.datetime.today()).strftime(date_time_str)
+    date = utc.localize(datetime.datetime.utcnow(), is_dst=None).astimezone(
+        country).strftime(date_time_str)
     return date
 
 
