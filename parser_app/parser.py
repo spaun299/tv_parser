@@ -130,7 +130,8 @@ class SeleniumWebDriver(object):
                                         {'channel_link': id_and_link['link'], 'date': day})
                         time.sleep(1)
                         channels_tags = self.driver.find_elements_by_css_selector(
-                            'div.b-tv-channel-schedule__items > div.b-tv-channel-schedule__item > a')
+                            'div.b-tv-channel-schedule__items > '
+                            'div.b-tv-channel-schedule__item > a')
                         tv_channels = []
                         for channel in channels_tags:
                             program_name = channel.find_element_by_class_name(
