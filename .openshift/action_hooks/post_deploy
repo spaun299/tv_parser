@@ -4,6 +4,7 @@ if [ "$phantom" ]; then
 echo "Phantomjs already running";
 else nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
  fi
+ sleep(10)
 scheduler_pid=$(ps -eaf | grep -v grep | grep run_scheduler.py | grep -v $$ | awk '{ print $2 }')
 if [ "$scheduler_pid" ]; then
 kill -SIGKILL $scheduler_pid
