@@ -12,11 +12,8 @@
 <br />chmod +x phantomjs
 <br />if file '.openshift/action_hooks/post_deploy' exists and you want change ghostdriver port, 
 <br />you can do it by modify .openshift/action_hooks/post_deploy file.
-<br />But then you have to run 'chmod +x .openshift/action_hooks/post_deploy',
-<br />if file '.openshift/action_hooks/post_deploy' does't exists you should create this one within:
-<br />\#!/bin/bash
-<br />nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
-<br />nohup python ${OPENSHIFT_REPO_DIR}/run_scheduler.py
+<br />But then you have to run 'chmod +x .openshift/action_hooks/post_deploy' and 
+<br />'chmod +x .openshift/action_hooks/pre_build',
 >*    3:)install necessary libraries:
 <br />source venv/bin/activate
 <br />pip instal -r requirements.txt
