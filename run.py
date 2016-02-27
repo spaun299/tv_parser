@@ -2,7 +2,6 @@ from flask import Flask, render_template, abort
 import config
 from utils.decorators import allow_ip
 from parser_app.models import GetRecordsFromDb
-from utils.log import write_to_log
 
 app = Flask(__name__)
 app.config.from_object(config)
