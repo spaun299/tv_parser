@@ -60,9 +60,11 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            print('scrolling...')
             time.sleep(5)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
+            print('parsing channels...')
             time.sleep(5)
             name = channel.find_element_by_css_selector(
                 'span.tv-channel-title__text').text.encode('utf-8')
@@ -89,6 +91,7 @@ class SeleniumWebDriver(object):
         date_today = get_date_time()
         count_programs = 0
         for id_and_link in ids_and_links:
+            print('parsing programs...')
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
             self.driver.get(id_and_link['link'])
