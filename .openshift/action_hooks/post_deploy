@@ -3,7 +3,7 @@ rm $OPENSHIFT_PYTHON_LOG_DIR/python_log.log, $OPENSHIFT_PYTHON_LOG_DIR/nohup_for
 touch $OPENSHIFT_PYTHON_LOG_DIR/python_log.log, $OPENSHIFT_PYTHON_LOG_DIR/nohup_for_scheduler.out
 phantom=$(ps -eaf | grep -v grep | grep phantomjs | grep -v $$)
 if [ "$phantom" ]; then
-echo "Phantomjs already running";
+echo "Phantomjs is already running";
 else nohup ${OPENSHIFT_DATA_DIR}/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
  fi
  sleep 10
