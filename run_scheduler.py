@@ -13,8 +13,8 @@ def run_scheduler():
         write_to_log('Run scheduler')
         driver.parse_url_channels()
         driver.parse_tv_programs()
-        schedule.every(1).monday.at('"06:00"').do(driver.parse_tv_programs)
-        schedule.every(2).saturday.at("'12:00'").do(driver.parse_url_channels)
+        schedule.every().monday.at('"06:00"').do(driver.parse_tv_programs)
+        schedule.every().sunday.at("'12:00'").do(driver.parse_url_channels)
         while True:
             schedule.run_pending()
             time.sleep(2)

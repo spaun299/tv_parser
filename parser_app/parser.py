@@ -61,7 +61,7 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(5)
+            time.sleep(10)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
             time.sleep(5)
@@ -96,7 +96,7 @@ class SeleniumWebDriver(object):
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
             if id_and_link.get('link'):
-                self.driver.get()
+                self.driver.get(id_and_link.get('link'))
                 time.sleep(5)
                 if '404' not in self.driver.title:
                     if not channel.description or not channel.web_site:
