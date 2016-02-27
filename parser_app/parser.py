@@ -60,13 +60,13 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            f = open('$OPENSHIFT_PYTHON_LOG_DIR/python_log.log', 'w+')
+            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
             print >> f, 'scrolling...'
             f.close()
             time.sleep(5)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
-            f = open('$OPENSHIFT_PYTHON_LOG_DIR/python_log.log', 'w+')
+            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
             print >> f, 'parsing channels...'
             f.close()
             time.sleep(5)
@@ -95,7 +95,7 @@ class SeleniumWebDriver(object):
         date_today = get_date_time()
         count_programs = 0
         for id_and_link in ids_and_links:
-            f = open('$OPENSHIFT_PYTHON_LOG_DIR/python_log.log', 'w+')
+            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
             print >> f, 'parsing programs...'
             f.close()
             channel = Channel(channel_id=id_and_link['id'])
