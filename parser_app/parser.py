@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from utils.log import write_to_log
 import time
 import config
 import os
 import datetime
-from utils.date_and_time import get_date_time
+from utils.date_and_time import get_date_and_time_with_timezone
 import re
 import json
 from utils.send_email import SendEmail
@@ -53,6 +53,7 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
+        write_to_log('Start channels parsing')
         func_tm = time.time()
         page_height = 0
         elements = {}
@@ -60,15 +61,9 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
-            print >> f, 'scrolling...'
-            f.close()
             time.sleep(5)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
-            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
-            print >> f, 'parsing channels...'
-            f.close()
             time.sleep(5)
             name = channel.find_element_by_css_selector(
                 'span.tv-channel-title__text').text.encode('utf-8')
@@ -82,22 +77,22 @@ class SeleniumWebDriver(object):
         save_records = SaveRecordsToDb()
         elements_count = save_records.save_channels_to_db(elements)
         func_tm = int(time.time()-func_tm)
+        text_for_log = 'Channels parsed successfully.{elements_count} new channels.' \
+                       'Execution time: {func_tm}'.\
+            format(elements_count=elements_count, func_tm=func_tm)
         send_email(subject='Parser notification',
-                   text='Url channels parsed successfully.{elements_count} new channels.'
-                        'Execution time: {func_tm}'.
-                   format(elements_count=elements_count, func_tm=func_tm))
+                   text=text_for_log)
+        write_to_log(text_for_log)
         SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=elements_count)
         self.driver.close()
 
     def parse_tv_programs(self):
+        write_to_log('Start programs parsing')
         func_tm = time.time()
         ids_and_links = GetRecordsFromDb().get_channels_id_and_link()
-        date_today = get_date_time()
+        date_today = get_date_and_time_with_timezone()
         count_programs = 0
         for id_and_link in ids_and_links:
-            f = open(os.environ.get('OPENSHIFT_PYTHON_LOG_DIR') + 'python_log.log', 'w+')
-            print >> f, 'parsing programs...'
-            f.close()
             channel = Channel(channel_id=id_and_link['id'])
             channel.update()
             self.driver.get(id_and_link['link'])
@@ -147,12 +142,15 @@ class SeleniumWebDriver(object):
                         count_programs += 1
                     SaveRecordsToDb.save_programs(id_and_link['id'], tv_channels)
             else:
+                write_to_log('Error. Page {page} not found'.format(page=self.driver.current_url))
                 send_email(subject='Page not found',
                            text='Page {page} not found'.format(page=self.driver.current_url))
         func_tm = time.time() - func_tm
+        text_for_log = 'Tv programs parsed successfully.' \
+                       'Execution time: %s' % func_tm
         send_email(subject='Parser notification',
-                   text='Tv programs parsed successfully.'
-                        'Execution time: %s' % func_tm)
+                   text=text_for_log)
+        write_to_log(text_for_log)
         SaveRecordsToDb.insert_log_info(parser_name='tv_programs', new_items=count_programs,
                                         execution_time=func_tm)
         self.driver.close()

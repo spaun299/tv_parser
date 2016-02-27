@@ -1,6 +1,6 @@
 #!/bin/bash
-rm $OPENSHIFT_PYTHON_LOG_DIR/python_log.log
-touch $OPENSHIFT_PYTHON_LOG_DIR/python_log.log
+rm $OPENSHIFT_PYTHON_LOG_DIR/python_log.log, $OPENSHIFT_PYTHON_LOG_DIR/nohup_for_scheduler.out
+touch $OPENSHIFT_PYTHON_LOG_DIR/python_log.log, $OPENSHIFT_PYTHON_LOG_DIR/nohup_for_scheduler.out
 phantom=$(ps -eaf | grep -v grep | grep phantomjs | grep -v $$)
 if [ "$phantom" ]; then
 echo "Phantomjs already running";
@@ -13,5 +13,5 @@ kill -SIGKILL $scheduler_pid
 echo "Scheduler was killed"
  fi
 chmod +x $OPENSHIFT_REPO_DIR/run_scheduler.py
-nohup python $OPENSHIFT_REPO_DIR/run_scheduler.py &
+nohup python $OPENSHIFT_REPO_DIR/run_scheduler.py > $OPENSHIFT_PYTHON_LOG_DIR/nohup_for_scheduler.out 2>&1&
 echo "Scheduler started successfully"

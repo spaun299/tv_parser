@@ -2,9 +2,14 @@ from pytz import timezone, country_timezones
 import datetime
 
 
-def get_date_time(country='UA'):
+def get_date_and_time_with_timezone(country='UA', date=True, time=False):
     country = timezone(country_timezones[country][0])
-    date = country.localize(datetime.datetime.today()).strftime('%Y-%m-%d')
+    date_time_str = ''
+    if date:
+        date_time_str += '%Y-%m-%d'
+    if time:
+        date_time_str += ' %H:%M:%S'
+    date = country.localize(datetime.datetime.today()).strftime(date_time_str)
     return date
 
 
