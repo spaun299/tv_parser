@@ -38,6 +38,7 @@
 <br />OPENSHIFT:
 <br />psql -d $PGDATABASE -a -f SCRIPT_NAME
 
+
 ###**Errors:**
 >*    If you have problem with smtp connection, you can try:
 <br />go to [this page](https://accounts.google.com/DisplayUnlockCaptcha)

@@ -1,4 +1,6 @@
 #!/bin/bash
+rm $OPENSHIFT_PYTHON_LOG_DIR/python_log.log
+touch $OPENSHIFT_PYTHON_LOG_DIR/python_log.log
 phantom=$(ps -eaf | grep -v grep | grep phantomjs | grep -v $$)
 if [ "$phantom" ]; then
 echo "Phantomjs already running";
