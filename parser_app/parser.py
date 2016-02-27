@@ -62,7 +62,7 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(10)
+            time.sleep(8)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         for channel in channels:
             time.sleep(5)
