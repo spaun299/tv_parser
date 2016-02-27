@@ -21,7 +21,7 @@
 <br />source venv/bin/activate
 <br />pip instal -r requirements.txt
 >*    4:)install and configure rhc tool:
-<br /><https://developers.openshift.com/en/getting-started-debian-ubuntu.html#client-tools>
+<br />[RHC install guide](https://developers.openshift.com/en/getting-started-debian-ubuntu.html#client-tools)
 >*    5:)install postgresql-9.2:
 <br />sudo add-apt-repository ppa:pitti/postgresql
 <br />sudo apt-get update
@@ -40,5 +40,5 @@
 
 ###**Errors:**
 >*    If you have problem with smtp connection, you can try:
-<br />go to <https://accounts.google.com/DisplayUnlockCaptcha>
+<br />go to [this page](https://accounts.google.com/DisplayUnlockCaptcha)
 <br />and try to run program (you have 10 minutes)
