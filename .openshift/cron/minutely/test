@@ -2,7 +2,7 @@
 repo_dir=$OPENSHIFT_REPO_DIR
 data_dir=$OPENSHIFT_DATA_DIR
 minute=$(date '+%M')
-if [ $minute == 57 ]; then
+if [ $minute == 58 ]; then
 echo "Starting scheduler"
 python $repo_dir/run_scheduler.py type='channels'
 echo "Scheduler finished successfully"
