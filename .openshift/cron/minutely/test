@@ -1,9 +1,9 @@
 #!/bin/bash
-repo_dir=$OPENSHIFT_REPO_DIR
-data_dir=$OPENSHIFT_DATA_DIR
-minute=$(date '+%M')
-if [ $minute == 29 ]; then
-echo "Starting scheduler"
-python $repo_dir/run_scheduler.py type='channels'
-echo "Scheduler finished successfully"
-fi
+#repo_dir=$OPENSHIFT_REPO_DIR
+#data_dir=$OPENSHIFT_DATA_DIR
+#minute=$(date '+%M')
+#if [ $minute == 29 ]; then
+#echo "Starting scheduler"
+#python $repo_dir/run_scheduler.py type='channels'
+#echo "Scheduler finished successfully"
+#fi
