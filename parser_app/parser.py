@@ -63,7 +63,7 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
-        run_phantomjs()
+        # run_phantomjs()
         time.sleep(20)
         self.driver_start()
         write_to_log('Start channels parsing')
@@ -100,10 +100,10 @@ class SeleniumWebDriver(object):
         write_to_log(text_for_log)
         SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=new_elements_count)
         self.driver.close()
-        kill_phantom_js()
+        # kill_phantom_js()
 
     def parse_tv_programs(self):
-        run_phantomjs()
+        # run_phantomjs()
         time.sleep(20)
         self.driver_start()
         write_to_log('Start programs parsing')
@@ -184,4 +184,4 @@ class SeleniumWebDriver(object):
         SaveRecordsToDb.insert_log_info(parser_name='tv_programs', new_items=count_programs,
                                         execution_time=func_tm)
         self.driver.close()
-        kill_phantom_js()
+        # kill_phantom_js()
