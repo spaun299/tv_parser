@@ -7,6 +7,6 @@ if [ "$phantom" ]; then
 echo "Phantomjs is already running";
 else nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 > $log_dir/nohup_for_scheduler.out 2>&1&
  fi
-sleep 10
-nohup python $repo_dir/run_scheduler.py > $data_dir/logs/nohup_for_scheduler.out 2>&1&
-echo "Scheduler started successfully"
+#sleep 10
+#nohup python $repo_dir/run_scheduler.py > $data_dir/logs/nohup_for_scheduler.out 2>&1&
+#echo "Scheduler started successfully"
