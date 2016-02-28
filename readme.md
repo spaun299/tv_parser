@@ -34,6 +34,8 @@
 <br />sudo -u admin psql -d yandex -a -f SCRIPT_NAME
 <br />OPENSHIFT:
 <br />psql -d $PGDATABASE -a -f SCRIPT_NAME
+>*    8:)Add cron cartridge to openshift to run script on scheduler:
+<br />rhc cartridge add cron-1.4 -a yandex
 
 
 ###**Errors:**

@@ -4,23 +4,29 @@ from parser_app.parser import SeleniumWebDriver
 from utils.send_email import SendEmail
 import schedule
 import subprocess
+import argparse
 
 driver = SeleniumWebDriver()
 send_email = SendEmail().send_email
 
 
-def run_scheduler():
+def run_scheduler(type_of_parser):
     try:
         write_to_log('Run scheduler')
-        driver.parse_url_channels()
-        driver.parse_tv_programs()
-        schedule.every(3).hours.do(driver.parse_tv_programs)
-        schedule.every(4).hours.do(driver.parse_url_channels)
+        if type_of_parser == 'channels':
+            driver.parse_url_channels()
+        elif type_of_parser == 'programs':
+            driver.parse_tv_programs()
+        # schedule.every(3).hours.do(driver.parse_tv_programs)
+        # schedule.every(4).hours.do(driver.parse_url_channels)
         # schedule.every().monday.at('"06:00"').do(driver.parse_tv_programs)
         # schedule.every().sunday.at("'12:00'").do(driver.parse_url_channels)
-        while True:
-            schedule.run_pending()
-            time.sleep(2)
+        # while True:
+        #     schedule.run_pending()
+        #     time.sleep(2)
+        else:
+            subprocess.Popen("echo Unknown argument for parser."
+                             "Type --help for more information".split())
     except Exception as e:
         write_to_log(error=e)
         send_email(subject='Parse error. Exception', exception=e)
@@ -33,4 +39,8 @@ def run_scheduler():
 
 
 if __name__ == '__main__':
-    run_scheduler()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('type', help='Parser type: channels or programs')
+    args = parser.parse_args()
+    type_of_parser = args.type.split("=")[-1]
+    run_scheduler(type_of_parser)

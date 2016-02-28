@@ -1,0 +1,3 @@
+#!/bin/bash
+repo_dir=$OPENSHIFT_REPO_DIR
+python $repo_dir/run_scheduler.py type='channels'
