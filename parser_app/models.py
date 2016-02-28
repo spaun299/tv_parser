@@ -8,7 +8,7 @@ class SaveRecordsToDb(object):
         pass
 
     def save_channels_to_db(self, dict_of_elements):
-        elements_count = 0
+        new_elements_count = 0
         self.insert_icons_into_files([link['icon'] for link in dict_of_elements.values()
                                       if link['icon']])
         for element in dict_of_elements.keys():
@@ -21,9 +21,9 @@ class SaveRecordsToDb(object):
                               (SELECT id FROM files WHERE file_link='{file_link}')); """.
                            format(name=dict_of_elements[element]['name'],
                                   link=element, file_link=dict_of_elements[element]['icon']))
-                elements_count += 1
+                new_elements_count += 1
         sql_connection.commit()
-        return elements_count
+        return new_elements_count
 
     @staticmethod
     def save_programs(channel_id, list_of_programs_classes):

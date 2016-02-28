@@ -24,7 +24,9 @@ class SeleniumWebDriver(object):
     def driver_start(self):
         write_to_log('Preparing driver to parsing')
         self.driver = self.get_phantomjs_driver()
+        write_to_log('Driver trying to open url %s' % self.url)
         self.driver.get(self.url)
+        write_to_log('Url %s opened successfully' % self.url)
         self.driver.set_window_size(1920, 1080)
         assert self.url in self.driver.current_url, "Can't open url: %s" % self.url
 
@@ -49,10 +51,11 @@ class SeleniumWebDriver(object):
     def get_phantomjs_driver():
         conf = dict(service_args=['--ssl-protocol=any'])
         if os.environ.get('OPENSHIFT_DATA_DIR'):
-            capabilities = dict(browserName='phantomjs', acceptSslCerts=True,
-                                javascriptEnabled=True)
+            capabilities = dict(browserName='phantomjs', acceptSslCerts=True)
+                                # javascriptEnabled=True)
             driver = webdriver.Remote(command_executor='http://'+os.environ.get(
                 'OPENSHIFT_PYTHON_IP')+':15005', desired_capabilities=capabilities)
+            write_to_log('Connected to remote web driver')
             return driver
         driver = webdriver.PhantomJS(**conf)
         return driver
@@ -69,6 +72,7 @@ class SeleniumWebDriver(object):
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(4)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
+        write_to_log('Found %s channels' % len(channels))
         for channel in channels:
             time.sleep(1)
             name = channel.find_element_by_css_selector(
@@ -81,16 +85,16 @@ class SeleniumWebDriver(object):
             if (href is not None) and (href not in elements.keys()):
                 elements[href] = {'name': name, 'icon': icon}
         save_records = SaveRecordsToDb()
-        elements_count = save_records.save_channels_to_db(elements)
+        new_elements_count = save_records.save_channels_to_db(elements)
         func_tm = int(time.time()-func_tm)
         text_for_log = 'Channels parsed successfully.{elements_count} new channels.' \
                        'Execution time: {func_tm}'.\
-            format(elements_count=elements_count,
+            format(elements_count=new_elements_count,
                    func_tm=hours_minutes_seconds_from_seconds(func_tm))
         send_email(subject='Parser notification',
                    text=text_for_log)
         write_to_log(text_for_log)
-        SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=elements_count)
+        SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=new_elements_count)
         self.driver.close()
 
     def parse_tv_programs(self):
@@ -162,7 +166,6 @@ class SeleniumWebDriver(object):
                     send_email(subject='Page not found',
                                text='Page {page} not found'.format(page=self.driver.current_url))
             else:
-                id_and_link.get('link')
                 write_to_log('Wrong channel link %s. Channel id %s' %
                              (id_and_link.get('link'), id_and_link.get('id')))
         func_tm = time.time() - func_tm
