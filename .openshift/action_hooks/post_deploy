@@ -8,6 +8,6 @@ echo "Phantomjs is already running";
 else nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
  fi
  sleep 10
-chmod +x $repo_dir/run_scheduler.py
-nohup python $repo_dir/run_scheduler.py > $data_dir/logs/nohup_for_scheduler.out 2>&1&
-echo "Scheduler started successfully"
+#chmod +x $repo_dir/run_scheduler.py
+#nohup python $repo_dir/run_scheduler.py > $data_dir/logs/nohup_for_scheduler.out 2>&1&
+#echo "Scheduler started successfully"
