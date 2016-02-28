@@ -6,6 +6,4 @@ if [ $minute == 58 ]; then
 echo "Starting scheduler"
 python $repo_dir/run_scheduler.py type='channels'
 echo "Scheduler finished successfully"
-kill -9 ps -eaf | grep -v grep | grep phantomjs | grep -v $$ | awk '{ print $2 }'
-echo "Phantomjs was killed"
 fi

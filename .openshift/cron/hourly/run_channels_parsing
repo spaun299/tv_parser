@@ -1,9 +1,13 @@
 #!/bin/bash
-repo_dir=$OPENSHIFT_REPO_DIR
-$week_day=$(date '+%A')
-if [ $week_day == 'неділя' ]; then echo "Starting scheduler";
-python $repo_dir/run_scheduler.py type='channels';echo "Scheduler finished successfully";
-fi
-if [ $week_day == 'понеділок' ]; then echo "Starting scheduler";
-python $repo_dir/run_scheduler.py type='programs';echo "Scheduler finished successfully";
-fi
+#repo_dir=$OPENSHIFT_REPO_DIR
+#$week_day=$(date '+%A')
+#if [ $week_day == 'неділя' ]; then
+#echo "Starting scheduler"
+#python $repo_dir/run_scheduler.py type='channels'
+#echo "Scheduler finished successfully"
+#fi
+#if [ $week_day == 'понеділок' ]; then
+#echo "Starting scheduler"
+#python $repo_dir/run_scheduler.py type='programs'
+#echo "Scheduler finished successfully"
+#fi

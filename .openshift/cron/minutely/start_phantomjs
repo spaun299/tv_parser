@@ -1,9 +1,0 @@
-#!/bin/bash
-repo_dir=$OPENSHIFT_REPO_DIR
-data_dir=$OPENSHIFT_DATA_DIR
-minute=$(date '+%M')
-if [ $minute == 57 ]; then
-echo "Starting phantomjs"
-nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
-echo "Phantomjs started"
-fi
