@@ -2,7 +2,7 @@ import time
 from functools import wraps
 from .send_email import SendEmail
 from flask import request
-from config import ALLOWED_iPS
+from config_app import ALLOWED_iPS
 from .date_and_time import hours_minutes_seconds_from_seconds
 from .log import write_to_log
 

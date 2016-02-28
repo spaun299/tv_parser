@@ -3,7 +3,7 @@
 from selenium import webdriver
 from utils.log import write_to_log
 import time
-import config
+import config_app
 import os
 import datetime
 from utils.date_and_time import get_date_and_time_with_timezone
@@ -17,11 +17,12 @@ send_email = SendEmail().send_email
 
 class SeleniumWebDriver(object):
 
-    def __init__(self, url=config.MAIN_PARSE_URL):
+    def __init__(self, url=config_app.MAIN_PARSE_URL):
         self.url = url
         self.driver = None
 
     def driver_start(self):
+        write_to_log('Preparing driver to parsing')
         self.driver = self.get_phantomjs_driver()
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)

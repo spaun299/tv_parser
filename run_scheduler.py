@@ -14,8 +14,10 @@ def run_scheduler(type_of_parser):
     try:
         write_to_log('Run scheduler')
         if type_of_parser == 'channels':
+            write_to_log('Preparing to parse channels')
             driver.parse_url_channels()
         elif type_of_parser == 'programs':
+            write_to_log('Preparing to parse programs')
             driver.parse_tv_programs()
         # schedule.every(3).hours.do(driver.parse_tv_programs)
         # schedule.every(4).hours.do(driver.parse_url_channels)

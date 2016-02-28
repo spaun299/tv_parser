@@ -1,10 +1,10 @@
 from flask import Flask, render_template, abort
-import config
+import config_app
 from utils.decorators import allow_ip
 from parser_app.models import GetRecordsFromDb
 
 app = Flask(__name__)
-app.config.from_object(config)
+app.config.from_object(config_app)
 
 
 @app.route('/')

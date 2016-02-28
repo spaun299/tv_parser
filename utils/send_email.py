@@ -1,4 +1,4 @@
-import config
+import config_app
 import smtplib
 import sys
 import traceback
@@ -7,11 +7,11 @@ import os
 
 
 class SendEmail:
-    def __init__(self, username=config.MAIL_USERNAME, password=config.MAIL_PASSWORD,
+    def __init__(self, username=config_app.MAIL_USERNAME, password=config_app.MAIL_PASSWORD,
                  send_to=None):
         self.username = username
         self.password = password
-        self.send_to = send_to or [config.MAIL_USERNAME]
+        self.send_to = send_to or [config_app.MAIL_USERNAME]
 
     def send_email(self, subject='Parse Error', text='Parse Error', exception=None,
                    use_smtp=True):
