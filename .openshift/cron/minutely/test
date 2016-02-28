@@ -2,12 +2,7 @@
 repo_dir=$OPENSHIFT_REPO_DIR
 data_dir=$OPENSHIFT_DATA_DIR
 minute=$(date '+%M')
-if [ $minute == 51 ]; then
-echo "Starting phantomjs"
-nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
-echo "Phantomjs started"
-fi
-if [ $minute == 52 ]; then
+if [ $minute == 57 ]; then
 echo "Starting scheduler"
 python $repo_dir/run_scheduler.py type='channels'
 echo "Scheduler finished successfully"
