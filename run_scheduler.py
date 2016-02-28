@@ -19,7 +19,7 @@ def run_scheduler():
         # elif type_of_parser == 'programs':
         #     write_to_log('Preparing to parse programs')
         #     driver.parse_tv_programs()
-        schedule.every().day.at("14:23").do(driver.parse_url_channels)
+        schedule.every().day.at("14:34").do(driver.parse_url_channels)
         schedule.every().day.at("14:55").do(driver.parse_tv_programs)
         # schedule.every().monday.at('"06:00"').do(driver.parse_tv_programs)
         # schedule.every().sunday.at("'12:00'").do(driver.parse_url_channels)
