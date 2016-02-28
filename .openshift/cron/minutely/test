@@ -2,12 +2,15 @@
 repo_dir=$OPENSHIFT_REPO_DIR
 data_dir=$OPENSHIFT_DATA_DIR
 minute=$(date '+%M')
-if [ $minute == 42 ]; then echo "Starting phantomjs";
-nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &;
+if [ $minute == 42 ]; then
+echo "Starting phantomjs"
+nohup $data_dir/phantomjs/bin/phantomjs --webdriver=$OPENSHIFT_PYTHON_IP:15005 &
 echo "Phantomjs started"
 fi
-if [ $minute == 43 ]; then echo "Starting scheduler";
-python $repo_dir/run_scheduler.py type='channels';echo "Scheduler finished successfully";
-kill -9 ps -eaf | grep -v grep | grep phantomjs | grep -v $$ | awk '{ print $2 }';
+if [ $minute == 43 ]; then
+echo "Starting scheduler"
+python $repo_dir/run_scheduler.py type='channels'
+echo "Scheduler finished successfully"
+kill -9 ps -eaf | grep -v grep | grep phantomjs | grep -v $$ | awk '{ print $2 }'
 echo "Phantomjs was killed"
 fi
