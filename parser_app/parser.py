@@ -74,7 +74,7 @@ class SeleniumWebDriver(object):
         while page_height != self.driver.execute_script(scroll_height_script):
             page_height = self.driver.execute_script(scroll_height_script)
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(4)
+            time.sleep(5)
         channels = self.driver.find_elements_by_css_selector(self.get_channel_css_selector())
         write_to_log('Found %s channels' % len(channels))
         for channel in channels:
@@ -104,6 +104,7 @@ class SeleniumWebDriver(object):
 
     def parse_tv_programs(self):
         run_phantomjs()
+        time.sleep(20)
         self.driver_start()
         write_to_log('Start programs parsing')
         func_tm = time.time()
