@@ -22,12 +22,10 @@ class SeleniumWebDriver(object):
         self.driver = None
 
     def driver_start(self):
-        print self.url
         self.driver = self.get_phantomjs_driver()
         self.driver.get(self.url)
         self.driver.set_window_size(1920, 1080)
         assert self.url in self.driver.current_url, "Can't open url: %s" % self.url
-
 
     @staticmethod
     def get_channel_xpath():
