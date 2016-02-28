@@ -37,7 +37,6 @@
 >*    8:)Add cron cartridge to openshift to run script on scheduler:
 <br />rhc cartridge add cron-1.4 -a yandex
 
-
 ###**Errors:**
 >*    If you have problem with smtp connection, you can try:
 <br />go to [this page](https://accounts.google.com/DisplayUnlockCaptcha)
