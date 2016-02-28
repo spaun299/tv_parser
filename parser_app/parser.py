@@ -26,6 +26,7 @@ class SeleniumWebDriver(object):
     def driver_start(self):
         write_to_log('Preparing driver to parsing')
         self.driver = self.get_phantomjs_driver()
+        time.sleep(5)
         write_to_log('Driver trying to open url %s' % self.url)
         self.driver.get(self.url)
         write_to_log('Url %s opened successfully' % self.url)
