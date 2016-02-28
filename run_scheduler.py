@@ -4,7 +4,7 @@ from parser_app.parser import SeleniumWebDriver
 from utils.send_email import SendEmail
 import schedule
 import subprocess
-import argparse
+from utils.bash_scripts import get_pid_by_name, kill_process
 
 driver = SeleniumWebDriver()
 send_email = SendEmail().send_email
@@ -15,7 +15,7 @@ def run_scheduler():
         write_to_log('Run scheduler')
         # if type_of_parser == 'channels':
         #     write_to_log('Preparing to parse channels')
-        #     driver.parse_url_channels()
+        driver.parse_url_channels()
         # elif type_of_parser == 'programs':
         #     write_to_log('Preparing to parse programs')
         #     driver.parse_tv_programs()
@@ -32,13 +32,8 @@ def run_scheduler():
     except Exception as e:
         write_to_log(error=e)
         send_email(subject='Parse error. Exception', exception=e)
-        bash_command = "ps -eaf | grep -v grep | grep run_scheduler.py " \
-                       "| grep -v $$ | awk '{ print $2 }'"
-        output = subprocess.check_output(['bash', '-c', bash_command])
-        bash_command = "kill -SIGKILL %s" % int(output)
         write_to_log('Kill scheduler after error')
-        subprocess.Popen(bash_command.split())
-
+        kill_process(get_pid_by_name('run_scheduler.py'))
 
 if __name__ == '__main__':
     # parser = argparse.ArgumentParser()

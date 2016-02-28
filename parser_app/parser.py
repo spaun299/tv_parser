@@ -12,6 +12,8 @@ import json
 from utils.send_email import SendEmail
 from .models import SaveRecordsToDb, GetRecordsFromDb, Channel, TvProgram
 from utils.date_and_time import hours_minutes_seconds_from_seconds
+import subprocess
+from utils.bash_scripts import run_phantomjs, kill_phantom_js
 send_email = SendEmail().send_email
 
 
@@ -61,6 +63,8 @@ class SeleniumWebDriver(object):
         return driver
 
     def parse_url_channels(self):
+        run_phantomjs()
+        time.sleep(20)
         self.driver_start()
         write_to_log('Start channels parsing')
         func_tm = time.time()
@@ -96,8 +100,10 @@ class SeleniumWebDriver(object):
         write_to_log(text_for_log)
         SaveRecordsToDb.insert_log_info(execution_time=func_tm, new_items=new_elements_count)
         self.driver.close()
+        kill_phantom_js()
 
     def parse_tv_programs(self):
+        run_phantomjs()
         self.driver_start()
         write_to_log('Start programs parsing')
         func_tm = time.time()
@@ -177,3 +183,4 @@ class SeleniumWebDriver(object):
         SaveRecordsToDb.insert_log_info(parser_name='tv_programs', new_items=count_programs,
                                         execution_time=func_tm)
         self.driver.close()
+        kill_phantom_js()
