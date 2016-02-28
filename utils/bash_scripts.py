@@ -21,7 +21,7 @@ def run_phantomjs():
                    '--webdriver=$OPENSHIFT_PYTHON_IP:15005 > ' \
                    '$OPENSHIFT_PYTHON_LOG_DIR/nohup_for_scheduler.out 2>&1&'
     subprocess.Popen(bash_command.split())
-    write_to_log('Phantomjs was started')
+    write_to_log('Phantomjs was started with PID %s' % get_pid_by_name('pahntomjs'))
 
 
 def kill_phantom_js():
