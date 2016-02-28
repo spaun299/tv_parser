@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from utils.log import write_to_log
 import time
 import config_app
@@ -54,10 +55,11 @@ class SeleniumWebDriver(object):
     def get_phantomjs_driver():
         conf = dict(service_args=['--ssl-protocol=any'])
         if os.environ.get('OPENSHIFT_DATA_DIR'):
-            capabilities = dict(browserName='phantomjs', acceptSslCerts=True)
-                                # javascriptEnabled=True)
+            capabilities = DesiredCapabilities.PHANTOMJS
+            capabilities['acceptSslCerts'] = True
             driver = webdriver.Remote(command_executor='http://'+os.environ.get(
-                'OPENSHIFT_PYTHON_IP')+':15005', desired_capabilities=capabilities)
+                'OPENSHIFT_PYTHON_IP')+':15005', desired_capabilities=capabilities,
+                                      keep_alive=True)
             write_to_log('Connected to remote web driver')
             return driver
         driver = webdriver.PhantomJS(**conf)
